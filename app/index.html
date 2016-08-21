@@ -22,23 +22,8 @@
             startUpTime();
             loadchromecast();
 
-            
-            function isVideo(){
-
-            }
-
             window.ondragover = function(e) {
                 e.preventDefault();
-
-                //TODO - Debug
-
-                ext = e.dataTransfer.files[0].path.split('.').pop()
-                if (ext == "mp4" || ext == "srt"){
-                    console.log("Si es")
-                }
-                else{
-                    console.log("No es mp4")
-                }
                 return false
             };
             window.ondrop = function(e) {
