@@ -18,5 +18,7 @@
     "srt2vtt": "*",
     "adm-zip": "*",
     "request": "*"
-  }
+  },
+
+  "autoupdate":"v0.2"
 }
