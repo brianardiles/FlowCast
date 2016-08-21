@@ -27,7 +27,7 @@ function updateFlow(){
 var fileSize,
     size = 0;
 
-request('https://rawgit.com/brai4u/FCautoUpdate/master/updates/flowcast-update-0.3.rar')
+request('https://rawgit.com/brai4u/FCautoUpdate/master/updates/update.zip')
   .on('response', function(response) {
       fileSize = response.headers['content-length'];
     })
