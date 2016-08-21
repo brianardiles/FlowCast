@@ -235,13 +235,5 @@ function loadingEnd() {
     clearInterval(startup);
 }
 
-function checkUpdate(){
-    console.log("buscando updates");
-const updateNotifier = require('update-notifier');
-const pkg = require('../package.json');
- 
-updateNotifier({pkg}).notify();
-}
-
 //debug
 console.log("deviceC.js loaded");
