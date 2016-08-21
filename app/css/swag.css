@@ -13,6 +13,21 @@ body{
     -webkit-app-region: drag
 }
 
+#noti{
+  position: fixed;
+  background-color: rgb(33, 150, 243);
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  padding: 10px;
+  top: 78px;
+  right: 20px;
+  color: #fff;
+  font-family: sans-serif;
+  font-size: 14px;
+  z-index: 999;
+  display: none;
+}
+
 #bar{
     background-color: black;
     bottom: 0px;

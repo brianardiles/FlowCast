@@ -11,11 +11,12 @@
     "transparent": true
   },
   
-  "version":"0.0.2",
+  "version":"0.0.3",
 
   "dependencies": {
     "chromecast-js": "git+https://github.com/brai4u/chromecast-js.git",
     "srt2vtt": "*",
-    "adm-zip": "*"
+    "adm-zip": "*",
+    "request": "*"
   }
 }
