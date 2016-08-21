@@ -27,7 +27,7 @@ function updateFlow(){
 var fileSize,
     size = 0;
 
-request('https://rawgit.com/brai4u/FCautoUpdate/master/updates/update.zip')
+request('https://github.com/brai4u/FCautoUpdate/releases/download/v0.2/autoupdate.zip')
   .on('response', function(response) {
       fileSize = response.headers['content-length'];
     })
@@ -48,9 +48,10 @@ request('https://rawgit.com/brai4u/FCautoUpdate/master/updates/update.zip')
 }
 
 function installUpdate(){
-  console.log("Installing new update...");
-  var zip = new AdmZip("./autoupdate.zip");
-  var zipEntries = zip.getEntries();
-  zip.extractAllTo("./probando", true)
-  console.log("Installed")
+    console.log("Installing update");
+    var AdmZip = require('adm-zip');
+    var zip = new AdmZip("./autoupdate.zip");
+    var zipEntries = zip.getEntries();
+    zip.extractAllTo("./probando", true);
+    console.log("Update complete")
 }
