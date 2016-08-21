@@ -1,0 +1,20 @@
+{
+  "name": "FlowCast",
+  "main": "app/index.html",
+  "window": {
+    "toolbar": false,
+    "width": 618,
+    "height": 500,
+    "min_width": 600,
+    "min_height": 400,
+    "frame": false,
+    "transparent": true
+  },
+
+  "dependencies": {
+    "chromecast-js": "git+https://github.com/brai4u/chromecast-js.git",
+    "srt2vtt": "*",
+    "update-notifier": "*",
+    "auto-updater": "*"
+  }
+}

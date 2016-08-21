@@ -1,0 +1,275 @@
+@font-face {
+    font-family: RegularOpen;
+    src: url('OpenSans-Regular.ttf');
+}
+
+* {
+	margin:0px;
+}
+
+body{
+    font-family: RegularOpen;
+	background-color: #000000;
+    -webkit-app-region: drag
+}
+
+#bar{
+    background-color: black;
+    bottom: 0px;
+    position: absolute;
+    height: 92px;
+    width: 100%;
+    opacity: 0.7;
+}
+
+.controlls{
+	opacity: 1;
+	color:white;
+	text-align: center;
+}
+
+.center{
+    position: absolute;
+    top: 50%;
+    left: 47%;
+    width: 100%;
+    transform: translate(-50%, -50%);
+}
+
+.fa{
+	margin-left: 6%;
+    cursor: pointer;
+}
+
+.holder{
+    opacity: 0;
+    background-color: black;
+    position: absolute;
+    height: 75.5%;
+    width: 100%;
+    top: 27px;
+    color: white;
+}
+
+.holder-show{
+	border:3px dashed #56557d;
+    opacity: 0.7;
+    background-color: black;
+    position: absolute;
+    height: 75%;
+    width: 99.5%;
+    top: 27px;
+    color: white;
+    z-index: 99999
+}
+
+#text-holder{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#filename{
+    color: white;
+    top: 17.9%;
+    left: 84px;
+    font-size: 1.3em;
+    position: absolute;
+    width: 74%;
+    word-wrap: break-word;
+}
+
+#subtitles-name{
+    color: white;
+    top: 29.9%;
+    left: 84px;
+    font-size: 1.3em;
+    position: absolute;
+    width: 74%;
+    word-wrap: break-word;
+    z-index: 9999;
+}
+
+#subSelect{
+    background-color: transparent;
+    color:gray;
+}
+
+#videoFile{
+    color: white;
+    top: 17.9%;
+    position: absolute;
+    left: 46px;
+    margin-left: 0px;
+}
+
+#subFile{
+    color: white;
+    top: 29.9%;
+    position: absolute;
+    left: 46px;
+    margin-left: 0px;
+}
+
+#chromecastIcon{
+    color: white;
+    top: 30%;
+    position: absolute;
+    left: 46px;
+    margin-left: 0px;
+}
+
+#chromecastIcon-big{
+    color: white;
+    top: 28%;
+    position: absolute;
+    left: 46px;
+    width: 11%;
+    margin-left: -37px;
+    border-radius: 50%;
+    z-index: 99999;
+}
+
+.ChromecastDevice-big{
+    font-size: 1.1em;
+    width: 100%;
+    text-align: center;
+}
+
+.status-loading{
+    color: white;
+    font-size: 1.7em;
+    position: absolute;
+    top: 38%;
+    left: 51%;
+    transform: translate(-50%, -50%);
+    width: 75%;
+    height: 0%;
+    z-index: 99999;
+}
+
+#ChromecastDevice{
+    color: white;
+    top: 30%;
+    left: 84px;
+    font-size: 1.3em;
+    position: absolute;
+    width: 74%;
+    z-index: 99999;
+}
+
+#pop{
+    opacity: 1;
+    background-color: black;
+    position: absolute;
+    height: 75.5%;
+    width: 100%;
+    top: 27px;
+    color: white;
+    z-index: 99999;
+}
+
+#toolbar{
+    color: white;
+    background-color: black;
+    height: 27px;
+    width: 100%;
+    position: absolute;
+    top: 0px;
+    text-align: center;
+    -webkit-app-region: drag;
+}
+
+#timeStart{
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 37px;
+    transform: translate(-50%, -50%);
+}
+
+#timeEnd{
+    color: white;
+    position: absolute;
+    top: 50%;
+    right: 0px;
+    transform: translate(-50%, -50%);
+}
+
+#tooltext{
+    position: absolute;
+    top: 50%;
+    left: 47%;
+    width: 13%;
+    transform: translate(-50%, -50%);
+}
+
+#close {
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    background: #D32F2F;
+    position: inherit;
+    right: 8px;
+    top: 5px;
+    cursor: pointer;
+    -webkit-app-region: no-drag;
+}
+
+#min {
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    background: #FFC107;
+    position: inherit;
+    right: 31px;
+    top: 5px;
+    cursor: pointer;
+    -webkit-app-region: no-drag;
+}
+
+.w3-progress-container {
+    width: 100%;
+    height: 3px;
+}
+
+#progressbar{
+    position: absolute;
+    bottom: 92px;
+}
+
+.fa-plus{
+    cursor:default;
+}
+
+#oops{
+    position: absolute;
+    top: 29%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    display:none;
+}
+
+
+#tryagain:hover {
+    background-color: #3995bb;
+    transition: background 0.1s linear;
+    color: #fff;
+}
+#tryagain {
+    border: solid 2px #3995bb;
+    border-radius: 3px;
+    padding: 6px 3px;
+    text-decoration: none;
+    transition: background-color ease .2s;
+    text-align: center;
+    top: 28%;
+    position: relative;
+    width: 51%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    cursor: pointer;
+}
