@@ -1,5 +1,6 @@
 var remoteVersion,
-    localVersion;
+    localVersion,
+    autoupdate;
 
 var request = require("request"),
     getpkg = require('../package.json');
@@ -15,10 +16,11 @@ request({
     if (!error && response.statusCode === 200) {
       if(json.version != localVersion){
         remoteVersion = json.version;
+        autoupdate = json.autoupdate
         updateFlow();
       }
       else{
-        console.log("Actualizado")
+        console.log("Updated!")
       }
     }
 })
@@ -27,7 +29,7 @@ function updateFlow(){
 var fileSize,
     size = 0;
 
-request('https://github.com/brai4u/FCautoUpdate/releases/download/v0.2/autoupdate.zip')
+request('https://github.com/brai4u/FCautoUpdate/archive/'+autoupdate+'.zip')
   .on('response', function(response) {
       fileSize = response.headers['content-length'];
     })
