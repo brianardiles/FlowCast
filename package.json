@@ -10,16 +10,12 @@
     "frame": false,
     "transparent": true
   },
-
+  
   "version":"0.0.2",
-  "auto-updater":{
-    "repo":"/brai4u/FCautoUpdate",
-    "branch":"master"
-},
 
   "dependencies": {
     "chromecast-js": "git+https://github.com/brai4u/chromecast-js.git",
     "srt2vtt": "*",
-    "auto-updater": "*"
+    "adm-zip": "*"
   }
 }
