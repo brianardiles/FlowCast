@@ -11,7 +11,7 @@
     "transparent": true
   },
   
-  "version":"0.0.3",
+  "version":"0.0.4",
 
   "dependencies": {
     "chromecast-js": "git+https://github.com/brai4u/chromecast-js.git",
@@ -20,5 +20,5 @@
     "request": "*"
   },
 
-  "autoupdate":"v0.2"
+  "autoupdate":"v0.4"
 }
