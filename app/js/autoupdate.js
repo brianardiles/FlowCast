@@ -44,7 +44,7 @@ request('https://github.com/brai4u/FCautoUpdate/archive/'+autoupdate+'.zip')
 
   .pipe(fs.createWriteStream('autoupdate.zip'))
   .on('close', function () {
-    console.log('descarga completa');
+    console.log('Dowloaded: ' + autoupdate);
     installUpdate();
   });
 }
