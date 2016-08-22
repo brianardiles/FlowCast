@@ -106,9 +106,10 @@ body{
     z-index: 9999;
 }
 
-#subSelect{
-    background-color: transparent;
-    color:gray;
+#subSelect, option {
+    background: rgba(0,0,0,1);
+    border: 1px solid white;
+    color: white;
 }
 
 #videoFile{

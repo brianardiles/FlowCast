@@ -160,8 +160,9 @@ function CleanControlls() {
 }
 
 function stopStreaming() {
+    deviceStatus = false;
     device.stop(function() {
-        //device.close();
+        device.close();
         device = undefined;
         deviceStatus = false;
         dropSubs = null;
@@ -216,7 +217,7 @@ function loadchromecast() {
         $("#ChromecastDevice").html("Conecting at device");
         device.on('connected', function() {
             $("#ChromecastDevice").html(device.config.name);
-            device.background('http://192.168.0.16:8660/', function() {
+            device.background('http://'+ipLocal+':8660/', function() {
                 loadingEnd();
                 background = true;
             });
