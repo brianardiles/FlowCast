@@ -29,7 +29,7 @@ function updateFlow(){
 var fileSize,
     size = 0;
 
-request('https://github.com/brai4u/FCautoUpdate/archive/'+autoupdate+'.zip')
+request('https://github.com/brai4u/FCautoUpdate/archive/v'+autoupdate+'.zip')
   .on('response', function(response) {
       fileSize = response.headers['content-length'];
     })
@@ -44,17 +44,17 @@ request('https://github.com/brai4u/FCautoUpdate/archive/'+autoupdate+'.zip')
 
   .pipe(fs.createWriteStream('autoupdate.zip'))
   .on('close', function () {
-    console.log('Dowloaded: ' + autoupdate);
+    console.log('Dowloaded: v' + autoupdate);
     installUpdate();
   });
 }
-
+installUpdate();
 function installUpdate(){
     console.log("Installing update");
     var AdmZip = require('adm-zip');
     var zip = new AdmZip("./autoupdate.zip");
     var zipEntries = zip.getEntries();
-    var versionFolder = autoupdate.replace("v", "")
-    zip.extractEntryTo("FCautoUpdate-"+versionFolder+"", "/proban2", false, true);
+    console.log("FCautoUpdate-"+autoupdate)
+    zip.extractEntryTo("FCautoUpdate-"+autoupdate, "/proban2", false, true);
     console.log("Update complete")
 }
