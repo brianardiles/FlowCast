@@ -82,14 +82,13 @@ function startStreaming(status) {
     })
 }
 
-function SelectData(select){
-    if(select.value == "nosubs"){
-    device.subtitlesOff(function(err,status){
-            if(err) console.log("error setting subtitles off...")
+function SelectData(select) {
+    if (select.value == "nosubs") {
+        device.subtitlesOff(function(err, status) {
+            if (err) console.log("error setting subtitles off...")
             console.log("subtitles removed.")
         });
-    }
-    else{
+    } else {
         CreateSubs(select.value);
     }
 }
@@ -140,14 +139,13 @@ function statusBar() {
 
 //http://stackoverflow.com/a/11792861
 function secondsTimeSpanToHMS(s) {
-        var h = Math.floor(s / 3600);
-        s -= h * 3600;
-        var m = Math.floor(s / 60);
-        s -= m * 60;
-        return h + ":" + (m < 10 ? '0' + m : m) + ":" + (s < 10 ? '0' + s : s);
-    }
-    //http://stackoverflow.com/a/11792861
-
+    var h = Math.floor(s / 3600);
+    s -= h * 3600;
+    var m = Math.floor(s / 60);
+    s -= m * 60;
+    return h + ":" + (m < 10 ? '0' + m : m) + ":" + (s < 10 ? '0' + s : s);
+}
+//http://stackoverflow.com/a/11792861
 
 function CleanControlls() {
     clearInterval(timerInterval);
@@ -177,24 +175,24 @@ function stopStreaming() {
 function backTo() {
     device.getStatus(function(status) {
         device.seekTo(-status.media.duration, function() {
-        device.pause(function() {
-            pause = true
-            $('#pause').attr('class', 'fa fa-play fa-3x');
-            $("#pause").attr("id", "play");
-        });
+            device.pause(function() {
+                pause = true
+                $('#pause').attr('class', 'fa fa-play fa-3x');
+                $("#pause").attr("id", "play");
+            });
         });
     });
 }
 
-function seekTo(where){
-    if(where == "go"){
-        device.seek(30,function(){
+function seekTo(where) {
+    if (where == "go") {
+        device.seek(30, function() {
             console.log('seeking forward!')
         });
-    }else{
-        device.seek(-30,function(){
+    } else {
+        device.seek(-30, function() {
             console.log('seeking back!')
-        });      
+        });
     }
 }
 
@@ -226,7 +224,6 @@ function loadchromecast() {
     })
 }
 
-
 function loadingChrome() {
     var rot = 0
     loading = setInterval(function() {
@@ -235,20 +232,20 @@ function loadingChrome() {
     }, 30);
 }
 
-function startUpTime(){
+function startUpTime() {
     timerun = 0
-    startup = setInterval(function (){
+    startup = setInterval(function() {
         timerun++
         console.log(timerun);
 
-    if(timerun >=20 ){
-        console.log("se cierra");
-        clearInterval(startup);
-        clearInterval(loading);
-        $("#pop").fadeIn();
-        $("#status").fadeOut("");
-        $("#oops").fadeIn();
-    }
+        if (timerun >= 20) {
+            console.log("se cierra");
+            clearInterval(startup);
+            clearInterval(loading);
+            $("#pop").fadeIn();
+            $("#status").fadeOut("");
+            $("#oops").fadeIn();
+        }
     }, 1000);
 }
 
