@@ -16,6 +16,10 @@ request({
 }, function (error, response, json) {
 
     if (!error && response.statusCode === 200) {
+      if(json.developerMode){
+        console.log("developer mode");
+        return 1;
+      }
       autoupdate = json.autoupdate;
       if(json.version != localVersion){
         remoteVersion = json.version;
