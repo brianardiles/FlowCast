@@ -20,6 +20,5 @@
     "adm-zip": "*",
     "request": "*"
   },
-
   "autoupdate":"0.5"
 }
