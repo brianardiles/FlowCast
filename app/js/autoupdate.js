@@ -50,14 +50,14 @@ request('https://github.com/brai4u/'+gitrepo+'/archive/v'+autoupdate+'.zip')
     installUpdate();
   });
 }
-installUpdate();
 function installUpdate(){
     $("#noti").html("Installing update");
     var AdmZip = require('adm-zip');
     var zip = new AdmZip("./autoupdate.zip");
-    var zipEntries = zip.getEntries();
     console.log(gitrepo + "-" +autoupdate)
-    zip.extractEntryTo(gitrepo + "-" +autoupdate+"/", "./", false, true);
+    zip.extractEntryTo(gitrepo + "-" +autoupdate+"/app/", "./app", false, true);
+    zip.extractEntryTo(gitrepo + "-" +autoupdate+"/node_modules/", "./node_modules", false, true);
+    zip.extractEntryTo(gitrepo + "-" +autoupdate+"/package.json", "./", false, true);
     $("#noti").html("Update complete!");
 
     //restart
