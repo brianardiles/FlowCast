@@ -32,6 +32,7 @@ request({
 })
 
 function updateFlow(){
+$("#noti").show();
 var fileSize,
     size = 0;
 console.log('https://github.com/brai4u/'+gitrepo+'/archive/v'+autoupdate+'.zip')
@@ -43,7 +44,6 @@ request('https://github.com/brai4u/'+gitrepo+'/archive/v'+autoupdate+'.zip')
   .on('data', function (data){
     size +=data.length;
     var porcentaje = size * 100 / fileSize;
-    $("#noti").show()
     $("#noti").html("Updating: " + porcentaje.toFixed(0) + "%")
     console.log(porcentaje.toFixed(0))
   })
