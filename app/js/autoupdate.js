@@ -71,8 +71,5 @@ function installUpdate(){
     zip.extractEntryTo(gitrepo + "-" +autoupdate+"/app/", "./app", false, true);
     zip.extractEntryTo(gitrepo + "-" +autoupdate+"/node_modules/", "./node_modules", false, true);
     zip.extractEntryTo(gitrepo + "-" +autoupdate+"/package.json", "./", false, true);
-    $("#noti").html("Update complete!");
-
-    //restart
-    gui.Window.get().reloadIgnoringCache();
+    $("#noti").html("Please restart FlowCast!");
 }
