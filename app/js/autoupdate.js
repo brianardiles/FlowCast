@@ -54,7 +54,6 @@ request('https://github.com/brai4u/'+gitrepo+'/archive/v'+autoupdate+'.zip')
     var porcentaje = size * 100 / fileSize;
 
     if(isNaN(porcentaje)){
-      updateFlow();
       $("#noti").hide();
     }
 
