@@ -2,11 +2,13 @@ var remoteVersion,
     localVersion,
     autoupdate;
 
+var gitrepo = "FCautoUpdate";
+
 var request = require("request"),
     getpkg = require('../package.json');
 
 localVersion = getpkg.version;
-var url = "https://raw.githubusercontent.com/brai4u/FCautoUpdate/master/package.json"
+var url = "https://raw.githubusercontent.com/brai4u/"+gitrepo+"/master/package.json"
 
 request({
     url: url,
@@ -14,9 +16,9 @@ request({
 }, function (error, response, json) {
 
     if (!error && response.statusCode === 200) {
+      autoupdate = json.autoupdate;
       if(json.version != localVersion){
         remoteVersion = json.version;
-        autoupdate = json.autoupdate
         updateFlow();
       }
       else{
@@ -28,8 +30,8 @@ request({
 function updateFlow(){
 var fileSize,
     size = 0;
-
-request('https://github.com/brai4u/FCautoUpdate/archive/v'+autoupdate+'.zip')
+console.log('https://github.com/brai4u/'+gitrepo+'/archive/v'+autoupdate+'.zip')
+request('https://github.com/brai4u/'+gitrepo+'/archive/v'+autoupdate+'.zip')
   .on('response', function(response) {
       fileSize = response.headers['content-length'];
     })
@@ -50,11 +52,14 @@ request('https://github.com/brai4u/FCautoUpdate/archive/v'+autoupdate+'.zip')
 }
 installUpdate();
 function installUpdate(){
-    console.log("Installing update");
+    $("#noti").html("Installing update");
     var AdmZip = require('adm-zip');
     var zip = new AdmZip("./autoupdate.zip");
     var zipEntries = zip.getEntries();
-    console.log("FCautoUpdate-"+autoupdate)
-    zip.extractEntryTo("FCautoUpdate-"+autoupdate, "/proban2", false, true);
-    console.log("Update complete")
+    console.log(gitrepo + "-" +autoupdate)
+    zip.extractEntryTo(gitrepo + "-" +autoupdate+"/", "./", false, true);
+    $("#noti").html("Update complete!");
+
+    //restart
+    gui.Window.get().reloadIgnoringCache();
 }
