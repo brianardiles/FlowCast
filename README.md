@@ -16,10 +16,11 @@
 
 **Widows:**
 
+(32 bits, user version)
 Download the setup and fun: [Setup v1.3](https://github.com/brai4u/FlowCast/releases/download/exe/FlowCast-setup-1.3.exe)
 
 or
-
+  (32 bits, dev version)
   Download the [last version](https://github.com/brai4u/FlowCast/archive/master.zip), unzip and run in cmd (need nodejs)
   
   ``npm install``
