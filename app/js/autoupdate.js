@@ -11,7 +11,7 @@ function debug(localDev){
   }
 }
 
-var gitrepo = "FCautoUpdate";
+var gitrepo = "FlowCast";
 
 var request = require("request"),
     getpkg = require('../package.json');
@@ -52,6 +52,12 @@ request('https://github.com/brai4u/'+gitrepo+'/archive/v'+autoupdate+'.zip')
   .on('data', function (data){
     size +=data.length;
     var porcentaje = size * 100 / fileSize;
+
+    isNaN(porcentaje){
+      updateFlow();
+      $("#noti").hide();
+    }
+
     $("#noti").show();
     $("#noti").html("Updating: " + porcentaje.toFixed(0) + "%")
     console.log(porcentaje.toFixed(0))
