@@ -12,7 +12,7 @@
   },
   
   "version":"0.0.5",
-  "developerMode": "true",
+  "developerMode": "false",
 
   "dependencies": {
     "chromecast-js": "git+https://github.com/brai4u/chromecast-js.git",
