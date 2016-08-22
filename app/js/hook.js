@@ -21,6 +21,14 @@ $(document).on("click", "#stop", function() {
     stopStreaming();
 });
 
+$(document).on("click", "#go", function() {
+    seekTo("go");
+});
+
+$(document).on("click", "#back", function() {
+    seekTo("back");
+});
+
 $(document).on("click", "#tryagain", function() {
     console.log("tray again")
     startUpTime()

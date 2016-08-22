@@ -84,7 +84,7 @@
         });
 
         nw.Window.get().on('close', function() {
-            if (deviceStatus || background) {
+            if (deviceStatus) {
                 stopStreaming();
             }
             this.close(true);
@@ -135,8 +135,10 @@
         <span id="timeStart">0:00:00</span>
         <div class="controlls center">
             <i id="backtoback" class="fa fa-step-backward fa-2x" aria-hidden="true"></i>
+            <i id="back" class="fa fa-backward fa-2x" aria-hidden="true"></i>
             <i id="play" class="fa fa-play fa-3x" aria-hidden="true"></i>
             <i id="stop" class="fa fa-stop fa-3x" aria-hidden="true"></i>
+            <i id="go" class="fa fa-forward fa-2x" aria-hidden="true"></i>
             <i class="fa fa-step-forward fa-2x" aria-hidden="true"></i>
         </div>
         <span id="timeEnd">0:00:00</span>

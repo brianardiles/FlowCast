@@ -166,10 +166,25 @@ function stopStreaming() {
 function backTo() {
     device.getStatus(function(status) {
         device.seekTo(-status.media.duration, function() {
-            device.pause();
-            console.log('back to back');
+        device.pause(function() {
+            pause = true
+            $('#pause').attr('class', 'fa fa-play fa-3x');
+            $("#pause").attr("id", "play");
+        });
         });
     });
+}
+
+function seekTo(where){
+    if(where == "go"){
+        device.seek(30,function(){
+            console.log('seeking forward!')
+        });
+    }else{
+        device.seek(-30,function(){
+            console.log('seeking back!')
+        });      
+    }
 }
 
 function loadchromecast() {
