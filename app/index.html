@@ -65,8 +65,7 @@
                         fs.exists(name + '.srt', (exists) => {
                             if(exists){
                                 CreateSubs(name + '.srt');
-                                //subFile = fullpath.split('\\').pop();
-                                //$('#subtitles-name').html(name.split('\\').pop() + '.srt');
+                                $('#subSelect').prepend('<option selected value="'+name + '.srt'+'">'+name.split('\\').pop() + '.srt'+'</option>');
                                 console.log("Subs with de the name loaded.");
                             }else {
                                 console.log("No subs with the same name")
@@ -75,8 +74,7 @@
 
                     } else if (ext == "srt") {
                         CreateSubs(name + '.srt');
-                        //$('#subtitles-name').html(name.split('\\').pop() + '.srt');
-                        //$('select').append('<option value="2">'+name.split('\\').pop() + '.srt'+'</option>')
+                        $('#subSelect').prepend('<option selected value="'+name + '.srt'+'">'+name.split('\\').pop() + '.srt'+'</option>');
                     }
                 }
                 return false;
@@ -105,14 +103,12 @@
     <div id="filename">
         Drag & drop a video here :)
     </div>
-<!--
     <i id="subFile" class="fa fa-file-text-o fa-2x" aria-hidden="true"></i>
     <div id="subtitles-name">
-        <select id="subSelect">
-            <option value="1"> No subs</option>
+        <select id="subSelect" onchange="SelectData(this);">
+            <option value="nosubs"> No subs</option>
         </select>
     </div>
--->
     <div id="pop">
         <span id="oops">
             <h1>Oops :(</h1>

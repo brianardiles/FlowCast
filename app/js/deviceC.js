@@ -82,6 +82,18 @@ function startStreaming(status) {
     })
 }
 
+function SelectData(select){
+    if(select.value == "nosubs"){
+    device.subtitlesOff(function(err,status){
+            if(err) console.log("error setting subtitles off...")
+            console.log("subtitles removed.")
+        });
+    }
+    else{
+        CreateSubs(select.value);
+    }
+}
+
 function CreateSubs(fullpath) {
     dropSubs = fullpath
     var srtData = fs.readFileSync(dropSubs);
@@ -145,9 +157,8 @@ function CleanControlls() {
     $('#pause').attr('class', 'fa fa-play fa-3x');
     $("#pause").attr("id", "play");
     $('#progress').attr('style', "width:0%");
-    //$("#ChromecastDevice").html("No device conected");
     $("#filename").html("Drag & drop a video here :)");
-    //deviceStatus = false;
+    $('#subSelect').html('<option value="nosubs">No subs</option>');
 }
 
 function stopStreaming() {
