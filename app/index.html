@@ -21,7 +21,7 @@
         $(document).ready(function() {
             startUpTime();
             loadchromecast();
-            
+
             window.ondragover = function(e) {
                 e.preventDefault();
                 return false
@@ -60,21 +60,21 @@
                             dropVideo = fullpath;
                             startStreaming();
                         }
-                        
+
                         dropVideo = fullpath
                         fs.exists(name + '.srt', (exists) => {
-                            if(exists){
+                            if (exists) {
                                 CreateSubs(name + '.srt');
-                                $('#subSelect').prepend('<option selected value="'+name + '.srt'+'">'+name.split('\\').pop() + '.srt'+'</option>');
+                                $('#subSelect').prepend('<option selected value="' + name + '.srt' + '">' + name.split('\\').pop() + '.srt' + '</option>');
                                 console.log("Subs with de the name loaded.");
-                            }else {
+                            } else {
                                 console.log("No subs with the same name")
                             }
                         });
 
                     } else if (ext == "srt") {
                         CreateSubs(name + '.srt');
-                        $('#subSelect').prepend('<option selected value="'+name + '.srt'+'">'+name.split('\\').pop() + '.srt'+'</option>');
+                        $('#subSelect').prepend('<option selected value="' + name + '.srt' + '">' + name.split('\\').pop() + '.srt' + '</option>');
                     }
                 }
                 return false;
@@ -86,7 +86,7 @@
                 stopStreaming();
             }
             this.close(true);
-            
+
         });
     </script>
 </head>
@@ -119,10 +119,10 @@
         </span>
     </div>
     <div id="status" class="status-loading">
-    <i id="chromecastIcon-big" class="fa fa-chrome fa-2x" aria-hidden="true"></i>
-    <div id="ChromecastDevice">
-        Searching chromecast
-    </div>
+        <i id="chromecastIcon-big" class="fa fa-chrome fa-2x" aria-hidden="true"></i>
+        <div id="ChromecastDevice">
+            Searching chromecast
+        </div>
     </div>
     <div id="progressbar" class="w3-progress-container w3-light-blue">
         <div id="progress" class="w3-progressbar w3-blue" style="width:0%"></div>
