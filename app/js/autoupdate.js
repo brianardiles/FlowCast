@@ -3,9 +3,12 @@ var remoteVersion,
     autoupdate,
     localDev = false;
 
-if(localDev){
-  console.log("debug mode");
-  return 1;
+debug(localDev);
+
+function debug(localDev){
+  if(localDev == true){
+    throw new ('[INFO]: DEBUG MODE');
+  }
 }
 
 var gitrepo = "FCautoUpdate";
