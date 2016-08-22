@@ -1,6 +1,12 @@
 var remoteVersion,
     localVersion,
-    autoupdate;
+    autoupdate,
+    localDev = false;
+
+if(localDev){
+  console.log("debug mode");
+  return 1;
+}
 
 var gitrepo = "FCautoUpdate";
 
@@ -16,7 +22,7 @@ request({
 }, function (error, response, json) {
 
     if (!error && response.statusCode === 200) {
-      if(json.developerMode){
+      if(json.developerMode == true){
         console.log("developer mode");
         return 1;
       }
@@ -32,7 +38,6 @@ request({
 })
 
 function updateFlow(){
-$("#noti").show();
 var fileSize,
     size = 0;
 console.log('https://github.com/brai4u/'+gitrepo+'/archive/v'+autoupdate+'.zip')
@@ -44,6 +49,7 @@ request('https://github.com/brai4u/'+gitrepo+'/archive/v'+autoupdate+'.zip')
   .on('data', function (data){
     size +=data.length;
     var porcentaje = size * 100 / fileSize;
+    $("#noti").show();
     $("#noti").html("Updating: " + porcentaje.toFixed(0) + "%")
     console.log(porcentaje.toFixed(0))
   })
