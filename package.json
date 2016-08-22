@@ -11,7 +11,7 @@
     "transparent": true
   },
   
-  "developerMode": "true",
+  "developerMode": "false",
 
   "dependencies": {
     "chromecast-js": "git+https://github.com/brai4u/chromecast-js.git",
