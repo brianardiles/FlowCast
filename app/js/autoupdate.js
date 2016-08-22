@@ -54,6 +54,7 @@ function installUpdate(){
     var AdmZip = require('adm-zip');
     var zip = new AdmZip("./autoupdate.zip");
     var zipEntries = zip.getEntries();
-    zip.extractAllTo("./probando", true);
+    var versionFolder = autoupdate.replace("v", "")
+    zip.extractEntryTo("FCautoUpdate-"+versionFolder+"", "/proban2", false, true);
     console.log("Update complete")
 }
