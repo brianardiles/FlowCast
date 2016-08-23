@@ -34,7 +34,7 @@ request({
       remoteVersion = json.version;
       updateFlow();
     } else {
-      console.log("Updated!")
+      console.log("No need a update")
     }
   }
 })

@@ -19,6 +19,6 @@
     "adm-zip": "*",
     "request": "*"
   },
-  "version":"0.1.6",
-  "autoupdate":"1.6"
+  "version":"0.1.7",
+  "autoupdate":"1.7"
 }
