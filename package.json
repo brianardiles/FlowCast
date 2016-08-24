@@ -22,6 +22,6 @@
     "file-exists": "*"
   },
   
-  "version":"0.1.8",
-  "autoupdate":"1.8"
+  "version":"0.1.8-1",
+  "autoupdate":"1.8-1"
 }
