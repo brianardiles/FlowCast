@@ -54,13 +54,15 @@ function updateFlow() {
 
     if (isNaN(porcentaje)) {
       $("#noti").hide();
-      throw new('[INFO]: No update avalible for someone reason');
     } else {
       $("#noti").show();
     }
 
     $("#noti").html("Updating: " + porcentaje.toFixed(0) + "%")
     console.log(porcentaje.toFixed(0))
+    if(porcentaje == "100"){
+     $("#noti").html("Installing...");
+    }
   })
 
   .pipe(fs.createWriteStream('autoupdate.zip'))
@@ -71,7 +73,6 @@ function updateFlow() {
 }
 
 function installUpdate() {
-  $("#noti").html("Installing update");
   var AdmZip = require('adm-zip');
   var zip = new AdmZip("./autoupdate.zip");
   console.log(gitrepo + "-" + autoupdate)
