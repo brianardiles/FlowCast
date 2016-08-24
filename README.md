@@ -2,8 +2,8 @@
 
 **FlowCast** is the easiest and cute way to send content to your Chromecast. Developer [@brai4u](https://twitter.com/brai4u)
 
-![FlowCast](http://puu.sh/qM6rU/4e7a47d678.png)
-v1.8-1
+![FlowCast](http://puu.sh/qMn6h/5d21cec9be.png)
+v1.8-4
 
 # Features
 
