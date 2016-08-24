@@ -198,6 +198,18 @@ option {
 .delfromplaylist:hover {
     opacity: 1!important;
 }
+
+.subtitlefromplaylist{
+    position: absolute;
+    right: 64px;
+    margin-top: 4px;
+    opacity: 0.2;
+}
+
+.subtitlefromplaylist:hover {
+    opacity: 1!important;
+}
+
 #pop {
     opacity: 1;
     background-color: black;
@@ -317,4 +329,9 @@ option {
 }
 ::-webkit-scrollbar-thumb:window-inactive {
     background: rgba(192, 192, 193, 0.5);
+}
+
+input
+{
+    display: none;
 }

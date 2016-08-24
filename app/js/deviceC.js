@@ -304,7 +304,7 @@ function addtoplaylist(nameF, pathfullFile, pathfullSubs) {
     $('#filename').hide();
     $('#videoFile').hide();
     $('#list').append(
-        '<li onclick="selectItem(this)" ondblclick="playList(this);" pathFile="' + pathfullFile + '" pathSubs="' + pathfullSubs + '">' + nameF + '<i onclick="delfromplaylist(this);" class="fa fa-times delfromplaylist" aria-hidden="true"></i></li>'
+        '<li onclick="selectItem(this)" ondblclick="playList(this);" pathFile="' + pathfullFile + '" pathSubs="' + pathfullSubs + '">' + nameF + '<label for="load-subtitles"><i class="fa fa-file-text-o subtitlefromplaylist" aria-hidden="true"></i></label> <i onclick="delfromplaylist(this);" class="fa fa-times delfromplaylist" aria-hidden="true"></i></li>'
     );
 }
 
@@ -418,6 +418,18 @@ function ClearSubsFolder(){
         fs.unlinkSync(filePath);
     }
 }
+
+$(function() {
+     $("input:file").change(function (){
+            var fileSubPath = $(this).val();
+
+            if(fileSubPath.split('.').pop() == 'srt'){
+                $('#noti').html("subtitle added!");
+                addsubtoplaylist(fileSubPath);
+                reloadvalues();
+            }
+     });
+});
 
 //debug
 console.log("deviceC.js loaded");

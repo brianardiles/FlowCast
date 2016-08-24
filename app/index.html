@@ -21,7 +21,6 @@
         $(document).ready(function() {
             startUpTime();
             loadchromecast();
-
             window.ondragover = function(e) {
                 e.preventDefault();
                 return false
@@ -142,6 +141,8 @@
     </div>
     <div id="holder" class="holder">
     </div>
+
+    <input id="load-subtitles" type="file" accept=".srt">
 </body>
 
 </html>
