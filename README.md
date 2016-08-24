@@ -33,6 +33,9 @@ or
 * ~~Playlist~~
 
 #Changelog
+Changelog 24/08/2016:
+* Allow sortable playlist items
+
 
 Changelog 23/08/2016:
 * Text no selected
