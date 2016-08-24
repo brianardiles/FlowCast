@@ -382,6 +382,18 @@ function nextPlayList() {
 // dropsubtitle set to select video
 function addsubtoplaylist(fullpath) {
     $(".selected").attr("pathSubs", fullpath)
+
+    var subtitleName = fullpath.split('\\').pop().replace('.srt', '');
+
+    $("li").each(function() {
+        var videopath = $(this).attr("pathFile").substr(0, $(this).attr("pathFile").length - 4);;
+        var videofileName = videopath.split('\\').pop();
+        console.log("video name:" +videofileName)
+        console.log("sub name:" +subtitleName)
+        if (videofileName == subtitleName) {
+            $(this).attr("pathSubs", fullpath)
+        }
+    });
 }
 
 // stop event, and counter when chomecast appears
