@@ -9,7 +9,6 @@
 body {
     font-family: RegularOpen;
     background-color: #000000;
-    -webkit-app-region: drag
 }
 #noti {
     position: fixed;
@@ -90,16 +89,17 @@ body {
     left: 84px;
     font-size: 1.3em;
     position: absolute;
-    width: 74%;
+    width: 49%;
     word-wrap: break-word;
     z-index: 9999;
 }
 #subSelect,
 option {
     background: rgba(0, 0, 0, 1);
-    border: 1px solid white;
     color: white;
     max-width: 47%;
+    border:0px;
+    outline:0px;
 }
 #videoFile {
     color: white;
