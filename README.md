@@ -12,6 +12,7 @@ v1.8-1
 * Autoload subtitles whith the same name of video
 * AutoUpdate system
 * Cute :)
+* Playlist
 
 # Getting Started
 
@@ -29,6 +30,24 @@ or
   ``npm install``
   
 #TO-DO List
-* Playlist
-  
-  
+* ~~Playlist~~
+
+#Changelog
+
+Changelog 23/08/2016:
+	* Text no selected
+	* Add playlist
+	* Automatic play from playlist
+	* Allow add multiple videos at playlist
+	* Allow remove videos from playlist
+	* Dedicate folder to subtitles files
+	* Fix drop area
+	* Fix overflow playlist area
+	* add custom scrollbar
+	* Fix load repeat files
+	* Fix next button
+	* Fix chromecast area
+	* More accurate text of status
+	* Add +30segs / - 30segs 
+	* Fix name of video on chromecast when reload subtitles
+	* Clear temp subs folder when closed
