@@ -301,6 +301,7 @@ function startUpTime() {
 
 // add video to playlist
 function addtoplaylist(nameF, pathfullFile, pathfullSubs) {
+    Sortable.create(list);
     $('#filename').hide();
     $('#videoFile').hide();
     $('#list').append(
@@ -376,6 +377,8 @@ function nextPlayList() {
     var nextitem = $('li[playing=true]').next()
     if (nextitem.is('li')) {
         $(nextitem).dblclick();
+    }else{
+        CleanControlls();
     }
 }
 
