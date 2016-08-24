@@ -420,6 +420,8 @@ function ClearSubsFolder(){
       if (fs.statSync(filePath).isFile())
         fs.unlinkSync(filePath);
     }
+
+    fs.closeSync(fs.openSync(process.cwd() + '\\app\\temp\\subs\\empty', 'w'));
 }
 
 $(function() {
