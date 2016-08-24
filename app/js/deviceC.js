@@ -1,9 +1,12 @@
 function startStreaming(status) {
+    
+    // no video file = no play
     if (!dropVideo) {
         alert("Load any video");
         return;
     }
 
+    // searh li item selected to set class an atributtes
     $("li").each(function() {
         if ($(this).attr("pathFile") == dropVideo) {
             $(this).addClass("selected")
@@ -14,9 +17,12 @@ function startStreaming(status) {
         }
     });
 
+    // name of video to chromecast, remove extension
     FileName = dropVideo.split('\\').pop();
     $("#ChromecastDevice").html("Streaming video...");
     ServerVideo(dropVideo);
+    
+    // if subtitles
     if (dropSubs) {
         $("#ChromecastDevice").html("Streaming subtitles...");
         ServerSubs(dropSubs);
@@ -54,7 +60,6 @@ function startStreaming(status) {
     }
 
     //always force a fresh conection
-
     chromecastjs = require('chromecast-js')
     var browser = new chromecastjs.Browser()
 
@@ -95,6 +100,7 @@ function startStreaming(status) {
     })
 }
 
+// Call from one click over on item
 function SelectData(select) {
     if (select.value == "nosubs") {
         device.subtitlesOff(function(err, status) {
@@ -107,6 +113,7 @@ function SelectData(select) {
     }
 }
 
+// .str to vtt
 function CreateSubs(fullpath) {
     dropSubs = fullpath
     filesubtmp = fullpath.split('\\').pop().replace('.srt', '.vtt')
@@ -118,6 +125,8 @@ function CreateSubs(fullpath) {
         dropSubs = destSub;
     });
     var fileVideo = $(".selected").attr("pathFile")
+
+    // if playing same video, load las time
     if (changeSub && dropVideo == fileVideo) {
         device.getStatus(function(newStatus) {
             resume = newStatus.currentTime
@@ -127,6 +136,7 @@ function CreateSubs(fullpath) {
     }
 }
 
+// set duration of video
 function setDuration() {
     device.getStatus(function(status) {
         timeFinal = secondsTimeSpanToHMS(status.media.duration).split('.')
@@ -135,6 +145,7 @@ function setDuration() {
     });
 }
 
+// update status bar
 function statusBar() {
     timerInterval = setInterval(function() {
         device.getStatus(function(newStatus) {
@@ -153,6 +164,7 @@ function statusBar() {
     }, 1000);
 }
 
+// seconds to HH:MM:SS
 //http://stackoverflow.com/a/11792861
 function secondsTimeSpanToHMS(s) {
     var h = Math.floor(s / 3600);
@@ -163,6 +175,7 @@ function secondsTimeSpanToHMS(s) {
 }
 //http://stackoverflow.com/a/11792861
 
+// reset controlls
 function CleanControlls() {
     clearInterval(timerInterval);
     $("#timeStart").html("0:00:00");
@@ -172,6 +185,7 @@ function CleanControlls() {
     $('#progress').attr('style', "width:0%");
 }
 
+// stop streaming :P
 function stopStreaming() {
     deviceStatus = false;
     device.stop(function() {
@@ -186,10 +200,12 @@ function stopStreaming() {
     });
 }
 
+// Set options no subtitle
 function setnosub() {
     $('#subSelect').html('<option value="nosubs">No subs</option>');
 }
 
+//back to start and pause
 function backTo() {
     device.getStatus(function(status) {
         device.seekTo(-status.media.duration, function() {
@@ -202,12 +218,14 @@ function backTo() {
     });
 }
 
+// next video of playlist manual
 function goTo() {
     device.getStatus(function(status) {
         device.seekTo(status.media.duration - 1);
     });
 }
 
+// seek to, -30segs / +30seg
 function seekTo(where) {
     if (where == "go") {
         device.seek(30, function() {
@@ -220,8 +238,12 @@ function seekTo(where) {
     }
 }
 
+// function to load chromecast
 function loadchromecast() {
+    //background server
     ServerImage();
+
+    //effect loading
     loadingChrome();
 
     //view
@@ -229,6 +251,7 @@ function loadchromecast() {
     $('#status').fadeIn();
     //view
 
+    //set background
     chromecastjs = require('chromecast-js')
     var browser = new chromecastjs.Browser()
 
@@ -248,6 +271,7 @@ function loadchromecast() {
     })
 }
 
+// effects chrome logo roting :P
 function loadingChrome() {
     var rot = 0
     loading = setInterval(function() {
@@ -256,13 +280,14 @@ function loadingChrome() {
     }, 30);
 }
 
+// if in 25secons not found any chromecast, stop and show mensaje
 function startUpTime() {
     timerun = 0
     startup = setInterval(function() {
         timerun++
         console.log(timerun);
 
-        if (timerun >= 20) {
+        if (timerun >= 25) {
             console.log("se cierra");
             clearInterval(startup);
             clearInterval(loading);
@@ -273,6 +298,8 @@ function startUpTime() {
     }, 1000);
 }
 
+
+// add video to playlist
 function addtoplaylist(nameF, pathfullFile, pathfullSubs) {
     $('#filename').hide();
     $('#videoFile').hide();
@@ -281,15 +308,19 @@ function addtoplaylist(nameF, pathfullFile, pathfullSubs) {
     );
 }
 
+// delete video from playlist
 function delfromplaylist(data) {
     $(data).parent().remove();
 }
 
+// calling from doble click event on playlist item
 function playList(data) {
     var file = $(data).attr("pathFile");
     var subs = $(data).attr("pathSubs");
     FileName = file.split('\\').pop();
     console.log(FileName);
+
+    // if subtitles set if not, no set :P
     if (subs == "0") {
         dropSubs = null
         dropVideo = file
@@ -305,6 +336,7 @@ function playList(data) {
     }
 }
 
+// calling from one click subtitle to select, and load subtitles
 function selectItem(data) {
     $('li').removeClass("selected")
     $(data).addClass("selected");
@@ -319,6 +351,7 @@ function selectItem(data) {
     }
 }
 
+//when one .srt is droped, reload values
 function reloadvalues() {
     var subs = $('.selected').attr("pathSubs");
     if (subs == "0") {
@@ -338,6 +371,7 @@ function reloadvalues() {
     }
 }
 
+// check if next video exist, and play
 function nextPlayList() {
     var nextitem = $('li[playing=true]').next()
     if (nextitem.is('li')) {
@@ -345,10 +379,12 @@ function nextPlayList() {
     }
 }
 
+// dropsubtitle set to select video
 function addsubtoplaylist(fullpath) {
     $(".selected").attr("pathSubs", fullpath)
 }
 
+// stop event, and counter when chomecast appears
 function loadingEnd() {
     clearInterval(loading);
     $("#chromecastIcon-big").css('-webkit-transform', 'rotate(0deg)');
