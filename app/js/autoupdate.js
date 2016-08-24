@@ -19,6 +19,7 @@ var request = require("request"),
 localVersion = getpkg.version;
 var url = "https://raw.githubusercontent.com/brai4u/" + gitrepo + "/master/package.json";
 
+requestUpdate();
 var checkUpdate = setInterval(function(){ requestUpdate() }, 5000);
 
 function requestUpdate(){
