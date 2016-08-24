@@ -1,13 +1,24 @@
 function startStreaming(status) {
     if (!dropVideo) {
-        alert("No se puede dar play sin video");
+        alert("Load any video");
         return;
     }
-    $("#ChromecastDevice").html("Creating video server...");
-    ServerVideo(dropVideo);
 
+    $("li").each(function() {
+        if ($(this).attr("pathFile") == dropVideo) {
+            $(this).addClass("selected")
+            $(this).attr("playing", "true")
+        } else {
+            $(this).removeClass("selected")
+            $(this).attr("playing", "false")
+        }
+    });
+
+    FileName = dropVideo.split('\\').pop();
+    $("#ChromecastDevice").html("Streaming video...");
+    ServerVideo(dropVideo);
     if (dropSubs) {
-        $("#ChromecastDevice").html("Creating subtitles server...");
+        $("#ChromecastDevice").html("Streaming subtitles...");
         ServerSubs(dropSubs);
         media = {
             url: 'http://' + ipLocal + ':8659/',
@@ -63,6 +74,7 @@ function startStreaming(status) {
                     resume = null;
                     dropSubs = null;
                     deviceStatus = true;
+                    changeSub = false;
                 });
             } else {
                 device.play(media, 0, function() {
@@ -76,6 +88,7 @@ function startStreaming(status) {
                     resume = null;
                     dropSubs = null;
                     deviceStatus = true;
+                    changeSub = false;
                 });
             }
         })
@@ -89,27 +102,29 @@ function SelectData(select) {
             console.log("subtitles removed.")
         });
     } else {
+        changeSub = true
         CreateSubs(select.value);
     }
 }
 
 function CreateSubs(fullpath) {
     dropSubs = fullpath
+    filesubtmp = fullpath.split('\\').pop().replace('.srt', '.vtt')
     var srtData = fs.readFileSync(dropSubs);
     srt2vtt(srtData, function(err, vttData) {
         if (err) throw new Error(err);
-        fs.writeFileSync(name + '.vtt', vttData);
-        dropSubs = fullpath.replace('.srt', '.vtt');
-
-        if (deviceStatus) {
-            device.getStatus(function(newStatus) {
-                resume = newStatus.currentTime
-            });
-
-            startStreaming();
-        }
-
+        var destSub = process.cwd() + '\\app\\temp\\subs\\' + filesubtmp;
+        fs.writeFileSync(destSub, vttData);
+        dropSubs = destSub;
     });
+    var fileVideo = $(".selected").attr("pathFile")
+    if (changeSub && dropVideo == fileVideo) {
+        device.getStatus(function(newStatus) {
+            resume = newStatus.currentTime
+        });
+
+        startStreaming();
+    }
 }
 
 function setDuration() {
@@ -132,6 +147,7 @@ function statusBar() {
             if (porciento >= 98) {
                 device.close();
                 CleanControlls();
+                nextPlayList();
             }
         });
     }, 1000);
@@ -151,12 +167,9 @@ function CleanControlls() {
     clearInterval(timerInterval);
     $("#timeStart").html("0:00:00");
     $("#timeEnd").html("0:00:00");
-    $("filename").html("Drag & drop a video here :)");
     $('#pause').attr('class', 'fa fa-play fa-3x');
     $("#pause").attr("id", "play");
     $('#progress').attr('style', "width:0%");
-    $("#filename").html("Drag & drop a video here :)");
-    $('#subSelect').html('<option value="nosubs">No subs</option>');
 }
 
 function stopStreaming() {
@@ -173,6 +186,10 @@ function stopStreaming() {
     });
 }
 
+function setnosub() {
+    $('#subSelect').html('<option value="nosubs">No subs</option>');
+}
+
 function backTo() {
     device.getStatus(function(status) {
         device.seekTo(-status.media.duration, function() {
@@ -182,6 +199,12 @@ function backTo() {
                 $("#pause").attr("id", "play");
             });
         });
+    });
+}
+
+function goTo() {
+    device.getStatus(function(status) {
+        device.seekTo(status.media.duration - 1);
     });
 }
 
@@ -217,7 +240,7 @@ function loadchromecast() {
         $("#ChromecastDevice").html("Conecting at device");
         device.on('connected', function() {
             $("#ChromecastDevice").html(device.config.name);
-            device.background('http://'+ipLocal+':8660/', function() {
+            device.background('http://' + ipLocal + ':8660/', function() {
                 loadingEnd();
                 background = true;
             });
@@ -250,6 +273,82 @@ function startUpTime() {
     }, 1000);
 }
 
+function addtoplaylist(nameF, pathfullFile, pathfullSubs) {
+    $('#filename').hide();
+    $('#videoFile').hide();
+    $('#list').append(
+        '<li onclick="selectItem(this)" ondblclick="playList(this);" pathFile="' + pathfullFile + '" pathSubs="' + pathfullSubs + '">' + nameF + '<i onclick="delfromplaylist(this);" class="fa fa-times delfromplaylist" aria-hidden="true"></i></li>'
+    );
+}
+
+function delfromplaylist(data) {
+    $(data).parent().remove();
+}
+
+function playList(data) {
+    var file = $(data).attr("pathFile");
+    var subs = $(data).attr("pathSubs");
+    FileName = file.split('\\').pop();
+    console.log(FileName);
+    if (subs == "0") {
+        dropSubs = null
+        dropVideo = file
+        setnosub();
+        startStreaming()
+    } else {
+        var subname = subs.split('\\').pop();
+        setnosub();
+        $('#subSelect').prepend('<option selected value="' + subs + '">' + subname + '</option>');
+        CreateSubs(subs)
+        dropVideo = file
+        startStreaming()
+    }
+}
+
+function selectItem(data) {
+    $('li').removeClass("selected")
+    $(data).addClass("selected");
+    var subs = $(data).attr("pathSubs");
+
+    if (subs == "0") {
+        setnosub();
+    } else {
+        var subname = subs.split('\\').pop();
+        setnosub();
+        $('#subSelect').prepend('<option selected value="' + subs + '">' + subname + '</option>');
+    }
+}
+
+function reloadvalues() {
+    var subs = $('.selected').attr("pathSubs");
+    if (subs == "0") {
+        setnosub();
+    } else {
+        var subname = subs.split('\\').pop();
+        setnosub();
+        $('#subSelect').prepend('<option selected value="' + subs + '">' + subname + '</option>');
+        $('#noti').html("subtitle added!");
+        $('#noti').show();
+        changeSub = true;
+        CreateSubs(subs)
+        setTimeout(
+            function() {
+                $('#noti').fadeOut();
+            }, 1000);
+    }
+}
+
+function nextPlayList() {
+    var nextitem = $('li[playing=true]').next()
+    if (nextitem.is('li')) {
+        $(nextitem).dblclick();
+    }
+}
+
+function addsubtoplaylist(fullpath) {
+    $(".selected").attr("pathSubs", fullpath)
+}
+
 function loadingEnd() {
     clearInterval(loading);
     $("#chromecastIcon-big").css('-webkit-transform', 'rotate(0deg)');
@@ -257,6 +356,19 @@ function loadingEnd() {
     $("#status").attr("class", "status-loaded");
     $("#chromecastIcon-big").attr("id", "chromecastIcon");
     clearInterval(startup);
+}
+
+//original function @guybedford
+function ClearSubsFolder(){
+    var dirPath = process.cwd() + '\\app\\temp\\subs';
+    try { var files = fs.readdirSync(dirPath); }
+    catch(e) { return; }
+    if (files.length > 0)
+    for (var i = 0; i < files.length; i++) {
+      var filePath = dirPath + '/' + files[i];
+      if (fs.statSync(filePath).isFile())
+        fs.unlinkSync(filePath);
+    }
 }
 
 //debug

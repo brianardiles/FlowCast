@@ -39,6 +39,10 @@ $(document).on("click", "#backtoback", function() {
     backTo();
 });
 
+$(document).on("click", "#gotogo", function() {
+    goTo();
+});
+
 $(document).on("click", "#close", function() {
     win.close();
 });

@@ -7,6 +7,7 @@
     "height": 500,
     "min_width": 600,
     "min_height": 400,
+    "max_width": 600,
     "frame": false,
     "transparent": true
   },
@@ -17,8 +18,10 @@
     "chromecast-js": "git+https://github.com/brai4u/chromecast-js.git",
     "srt2vtt": "*",
     "adm-zip": "*",
-    "request": "*"
+    "request": "*",
+    "file-exists": "*"
   },
-  "version":"0.1.7",
-  "autoupdate":"1.7"
+  
+  "version":"0.1.8",
+  "autoupdate":"1.8"
 }

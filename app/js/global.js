@@ -19,7 +19,8 @@ var device,
 	chromecastjs,
 	loading,
 	startup,
-	timerun;
+	timerun,
+	changeSub;
 
 var deviceStatus = false;
 var background = false;
@@ -30,7 +31,8 @@ var firstTime = true;
 var http = require("http"),
     fs = require('fs'),
     util = require('util'),
-    srt2vtt = require('srt2vtt');
+    srt2vtt = require('srt2vtt'),
+    fileExists = require('file-exists');
 
 var gui = require('nw.gui');
 

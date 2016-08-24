@@ -2,61 +2,54 @@
     font-family: RegularOpen;
     src: url('OpenSans-Regular.ttf');
 }
-
 * {
-	margin:0px;
+    margin: 0px;
+    -webkit-user-select: none;
 }
-
-body{
+body {
     font-family: RegularOpen;
-	background-color: #000000;
+    background-color: #000000;
     -webkit-app-region: drag
 }
-
-#noti{
-  position: fixed;
-  background-color: rgb(33, 150, 243);
-  -webkit-border-radius: 4px;
-  border-radius: 4px;
-  padding: 10px;
-  top: 78px;
-  right: 20px;
-  color: #fff;
-  font-family: sans-serif;
-  font-size: 14px;
-  z-index: 99999999;
-  display: none;
-  text-align: center;
+#noti {
+    position: fixed;
+    background-color: rgb(33, 150, 243);
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    padding: 10px;
+    top: 78px;
+    right: 20px;
+    color: #fff;
+    font-family: sans-serif;
+    font-size: 14px;
+    z-index: 99999999;
+    display: none;
+    text-align: center;
 }
-
-#bar{
+#bar {
     bottom: 0px;
     position: absolute;
     height: 92px;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.7);
 }
-
-.controlls{
-	opacity: 1;
-	color:white;
-	text-align: center;
+.controlls {
+    opacity: 1;
+    color: white;
+    text-align: center;
 }
-
-.center{
+.center {
     position: absolute;
     top: 50%;
     left: 47%;
     width: 100%;
     transform: translate(-50%, -50%);
 }
-
-.fa{
-	margin-left: 6%;
+.fa {
+    margin-left: 6%;
     cursor: pointer;
 }
-
-.holder{
+.holder {
     opacity: 0;
     background-color: black;
     position: absolute;
@@ -65,9 +58,8 @@ body{
     top: 27px;
     color: white;
 }
-
-.holder-show{
-	border:3px dashed #56557d;
+.holder-show {
+    border: 3px dashed #56557d;
     opacity: 0.7;
     background-color: black;
     position: absolute;
@@ -77,27 +69,24 @@ body{
     color: white;
     z-index: 99999
 }
-
-#text-holder{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+#text-holder {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
-
-#filename{
+#filename {
     color: white;
-    top: 17.9%;
-    left: 84px;
+    top: 43.1%;
+    left: 34%;
     font-size: 1.3em;
     position: absolute;
     width: 74%;
     word-wrap: break-word;
 }
-
-#subtitles-name{
+#subtitles-name {
     color: white;
-    top: 29.9%;
+    top: 11%;
     left: 84px;
     font-size: 1.3em;
     position: absolute;
@@ -105,38 +94,35 @@ body{
     word-wrap: break-word;
     z-index: 9999;
 }
-
-#subSelect, option {
-    background: rgba(0,0,0,1);
+#subSelect,
+option {
+    background: rgba(0, 0, 0, 1);
     border: 1px solid white;
     color: white;
+    max-width: 47%;
 }
-
-#videoFile{
+#videoFile {
     color: white;
-    top: 17.9%;
+    top: 43%;
+    position: absolute;
+    left: 29%;
+    margin-left: 0px;
+}
+#subFile {
+    color: white;
+    top: 11%;
     position: absolute;
     left: 46px;
     margin-left: 0px;
 }
-
-#subFile{
-    color: white;
-    top: 29.9%;
-    position: absolute;
-    left: 46px;
-    margin-left: 0px;
-}
-
-#chromecastIcon{
+#chromecastIcon {
     color: white;
     top: 41%;
     position: absolute;
     left: 46px;
     margin-left: 0px;
 }
-
-#chromecastIcon-big{
+#chromecastIcon-big {
     color: white;
     top: 28%;
     position: absolute;
@@ -146,36 +132,73 @@ body{
     border-radius: 50%;
     z-index: 99999;
 }
-
-.ChromecastDevice-big{
+.ChromecastDevice-big {
     font-size: 1.1em;
     width: 100%;
     text-align: center;
 }
-
-.status-loading{
+.status-loading {
     color: white;
     font-size: 1.7em;
     position: absolute;
     top: 38%;
-    left: 51%;
+    left: 61%;
     transform: translate(-50%, -50%);
     width: 75%;
     height: 0%;
     z-index: 99999;
 }
-
-#ChromecastDevice{
+.status-loaded {
     color: white;
-    top: 41%;
-    left: 84px;
-    font-size: 1.3em;
+    /* font-size: 1.3em; */
+    
     position: absolute;
-    width: 74%;
+    top: 11%;
+    left: 95%;
+    transform: translate(-50%, -50%);
+    width: 75%;
+    height: 0%;
+}
+#playList {
+    top: 24%;
+    position: absolute;
+    z-index: 9999;
+    color: white;
+    width: 94%;
+    height: 55%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+#playList li {
+    background: rgba(255, 255, 255, 0.11);
+    margin: 0 0 3px 0;
+    padding: 6px;
+    cursor: pointer;
+}
+#playList li:hover {
+    background: rgba(255, 255, 255, 0.34);
+}
+.selected {
+    background: rgba(255, 255, 255, 0.34)!important;
+}
+#ChromecastDevice {
+    color: white;
+    top: 3px;
+    left: 82px;
+    position: absolute;
+    width: 100%;
     z-index: 99999;
 }
-
-#pop{
+.delfromplaylist {
+    position: absolute;
+    right: 20px;
+    margin-top: 4px;
+    opacity: 0.2;
+}
+.delfromplaylist:hover {
+    opacity: 1!important;
+}
+#pop {
     opacity: 1;
     background-color: black;
     position: absolute;
@@ -185,8 +208,7 @@ body{
     color: white;
     z-index: 99999;
 }
-
-#toolbar{
+#toolbar {
     color: white;
     background-color: black;
     height: 27px;
@@ -196,31 +218,27 @@ body{
     text-align: center;
     -webkit-app-region: drag;
 }
-
-#timeStart{
+#timeStart {
     color: white;
     position: absolute;
     top: 50%;
     left: 37px;
     transform: translate(-50%, -50%);
 }
-
-#timeEnd{
+#timeEnd {
     color: white;
     position: absolute;
     top: 50%;
     right: 0px;
     transform: translate(-50%, -50%);
 }
-
-#tooltext{
+#tooltext {
     position: absolute;
     top: 50%;
     left: 47%;
     width: 13%;
     transform: translate(-50%, -50%);
 }
-
 #close {
     width: 17px;
     height: 17px;
@@ -232,7 +250,6 @@ body{
     cursor: pointer;
     -webkit-app-region: no-drag;
 }
-
 #min {
     width: 17px;
     height: 17px;
@@ -244,31 +261,25 @@ body{
     cursor: pointer;
     -webkit-app-region: no-drag;
 }
-
 .w3-progress-container {
     width: 100%;
     height: 3px;
 }
-
-#progressbar{
+#progressbar {
     position: absolute;
     bottom: 92px;
 }
-
-.fa-plus{
-    cursor:default;
+.fa-plus {
+    cursor: default;
 }
-
-#oops{
+#oops {
     position: absolute;
     top: 29%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-    display:none;
+    display: none;
 }
-
-
 #tryagain:hover {
     background-color: #3995bb;
     transition: background 0.1s linear;
@@ -288,4 +299,22 @@ body{
     margin-right: auto;
     margin-top: 20px;
     cursor: pointer;
+}
+/*custom scrollbar :P*/
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: rgba(192, 192, 193, 0.5);
+}
+::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(192, 192, 193, 0.5);
 }

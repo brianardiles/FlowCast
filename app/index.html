@@ -31,7 +31,7 @@
                 return false
             };
 
-            var holder = document.getElementById('holder');
+            var holder = $("div[id*='holder']")[0];
             holder.ondragover = function() {
                 $(this).attr("class", "holder-show");
                 return false;
@@ -43,38 +43,34 @@
             holder.ondrop = function(e) {
                 e.preventDefault();
                 $(this).attr("class", "holder");
+                var subdrop
                 for (var i = 0; i < e.dataTransfer.files.length; ++i) {
+
                     ext = e.dataTransfer.files[i].path.split('.').pop();
                     fullpath = e.dataTransfer.files[i].path
                     name = fullpath.substr(0, fullpath.length - 4);
-                    console.log(name);
+                    FileName = fullpath.split('\\').pop();
                     if (ext == "mp4" || ext == "mkv") {
-                        CleanControlls();
-                        FileName = fullpath.split('\\').pop();
-                        $('#filename').html(FileName);
-                        console.log("drop");
-                        console.log(deviceStatus);
-                        if (deviceStatus) {
-                            console.log("d2");
-                            console.log(deviceStatus);
-                            dropVideo = fullpath;
-                            startStreaming();
-                        }
-
                         dropVideo = fullpath
-                        fs.exists(name + '.srt', (exists) => {
-                            if (exists) {
-                                CreateSubs(name + '.srt');
-                                $('#subSelect').prepend('<option selected value="' + name + '.srt' + '">' + name.split('\\').pop() + '.srt' + '</option>');
-                                console.log("Subs with de the name loaded.");
-                            } else {
-                                console.log("No subs with the same name")
+
+                        // no repeat file
+                        $("li").each(function() {
+                            if ($(this).attr("pathFile") == fullpath) {
+                                $(this).remove()
                             }
                         });
 
+                        if (fileExists(name + '.srt')) {
+                            console.log("Subs with de the name loaded.");
+                            CreateSubs(name + '.srt')
+                            addtoplaylist(FileName, fullpath, name + '.srt');
+                        } else {
+                            addtoplaylist(FileName, fullpath, 0);
+                        }
+
                     } else if (ext == "srt") {
-                        CreateSubs(name + '.srt');
-                        $('#subSelect').prepend('<option selected value="' + name + '.srt' + '">' + name.split('\\').pop() + '.srt' + '</option>');
+                        addsubtoplaylist(fullpath);
+                        reloadvalues();
                     }
                 }
                 return false;
@@ -82,6 +78,7 @@
         });
 
         nw.Window.get().on('close', function() {
+            ClearSubsFolder()
             if (deviceStatus) {
                 stopStreaming();
             }
@@ -102,10 +99,15 @@
     <div id="filename">
         Drag & drop a video here :)
     </div>
+
+    <div id="playList">
+        <ul id="list" style="list-style-type:none">
+        </ul>
+    </div>
     <i id="subFile" class="fa fa-file-text-o fa-2x" aria-hidden="true"></i>
     <div id="subtitles-name">
         <select id="subSelect" onchange="SelectData(this);">
-            <option value="nosubs"> No subs</option>
+            <option value="nosubs">No subs</option>
         </select>
     </div>
     <div id="pop">
@@ -134,14 +136,11 @@
             <i id="play" class="fa fa-play fa-3x" aria-hidden="true"></i>
             <i id="stop" class="fa fa-stop fa-3x" aria-hidden="true"></i>
             <i id="go" class="fa fa-forward fa-2x" aria-hidden="true"></i>
-            <i class="fa fa-step-forward fa-2x" aria-hidden="true"></i>
+            <i id="gotogo" class="fa fa-step-forward fa-2x" aria-hidden="true"></i>
         </div>
         <span id="timeEnd">0:00:00</span>
     </div>
     <div id="holder" class="holder">
-        <div id="text-holder">
-            <i class="fa fa-plus fa-5x" aria-hidden="true"></i>
-        </div>
     </div>
 </body>
 
