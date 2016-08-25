@@ -20,7 +20,8 @@ var device,
 	loading,
 	startup,
 	timerun,
-	changeSub;
+	changeSub,
+	updating = false;
 
 var deviceStatus = false;
 var background = false;

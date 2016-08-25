@@ -359,7 +359,8 @@ option {
     position: absolute;
     color: white;
     top: 40px;
-    right: 24px;
+    right: 8px;
+    font-size: 19px;
 }
 
 #content-config{
@@ -416,6 +417,7 @@ input[type=range]:focus::-webkit-slider-runnable-track {
     background-color: rgb(70, 69, 69);
     text-align: center;
     margin-top: 6px;
+    border: 0px;
 }
 
 #subsConfigTitle{
@@ -430,4 +432,19 @@ input[type=range]:focus::-webkit-slider-runnable-track {
     right: 9px;
     font-style: italic;
     opacity: 0.3;
+}
+
+#checkupdates{
+    position: absolute;
+    bottom: 2px;
+    font-size: 10px;
+    left: 14px;
+    font-style: normal;
+    opacity: 0.3;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#checkupdates:hover{
+    opacity: 1!important;
 }

@@ -64,6 +64,15 @@ $(document).on("click", "#open-config", function() {
     })
 });
 
+$(document).on("click", "#checkupdates", function() {
+    if(!updating){
+        updating = true
+        requestUpdate();
+    }
+});
+
+
+
 
 //debug
 console.log("hook.js loaded");
