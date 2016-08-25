@@ -21,6 +21,7 @@ var url = "https://raw.githubusercontent.com/brai4u/" + gitrepo + "/master/packa
 var checkUpdate = setInterval(function(){ requestUpdate() }, 5000);
 
 function requestUpdate(){
+  $("#version").html("version: " + localVersion);
   request({
     url: url,
     json: true

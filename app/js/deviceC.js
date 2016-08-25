@@ -24,8 +24,6 @@ function startStreaming(status) {
     
     // if subtitles
     if (dropSubs) {
-        console.log("desde el play")
-        console.log(subtitlesColor)
         $("#ChromecastDevice").html("Streaming subtitles...");
         ServerSubs(dropSubs);
         media = {

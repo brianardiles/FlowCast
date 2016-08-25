@@ -422,3 +422,12 @@ input[type=range]:focus::-webkit-slider-runnable-track {
     top: 32px;
     position: relative;
 }
+
+#version{
+    position: absolute;
+    bottom: 2px;
+    font-size: 10px;
+    right: 9px;
+    font-style: italic;
+    opacity: 0.3;
+}
