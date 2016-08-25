@@ -33,9 +33,16 @@ or
 * ~~Playlist~~
 
 #Changelog
+Changelog 25/03/2016
+* Add setting menu
+* Add change subtitles color on the fly
+* Add change subtitles size on the fly
+* Add config file to save changes
+* Fix sortable list
+* Fix update request
+
 Changelog 24/08/2016:
 * Allow sortable playlist items
-
 
 Changelog 23/08/2016:
 * Text no selected
