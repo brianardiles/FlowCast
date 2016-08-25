@@ -40,6 +40,7 @@ Changelog 25/03/2016
 * Add config file to save changes
 * Fix sortable list
 * Fix update request
+* Add manual check for updates
 
 Changelog 24/08/2016:
 * Allow sortable playlist items
