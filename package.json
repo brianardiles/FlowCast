@@ -21,6 +21,6 @@
     "request": "*",
     "srt2vtt": "*"
   },
-  "version": "0.1.9",
-  "autoupdate": "1.9"
+  "version": "0.1.9-1",
+  "autoupdate": "1.9-1"
 }
