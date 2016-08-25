@@ -45,6 +45,7 @@ function requestUpdate(){
       else if (json.version = localVersion && updating){
           updating = false
           $("#checkupdates").html("This is the last version!");
+          clearInterval(checkUpdate)
       }
       else {
         console.log("No need a update");
