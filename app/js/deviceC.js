@@ -24,6 +24,8 @@ function startStreaming(status) {
     
     // if subtitles
     if (dropSubs) {
+        console.log("desde el play")
+        console.log(subtitlesColor)
         $("#ChromecastDevice").html("Streaming subtitles...");
         ServerSubs(dropSubs);
         media = {
@@ -38,10 +40,10 @@ function startStreaming(status) {
             },
             subtitles_style: {
                 backgroundColor: '#FFFFFF00', // see http://dev.w3.org/csswg/css-color/#hex-notation
-                foregroundColor: '#FFFFFFFF', // see http://dev.w3.org/csswg/css-color/#hex-notation
+                foregroundColor: subtitlesColor, // see http://dev.w3.org/csswg/css-color/#hex-notation
                 edgeType: 'DROP_SHADOW', // can be: "NONE", "OUTLINE", "DROP_SHADOW", "RAISED", "DEPRESSED"
                 edgeColor: '#00000073', // see http://dev.w3.org/csswg/css-color/#hex-notation
-                fontScale: 1.5, // transforms into "font-size: " + (fontScale*100) +"%"
+                fontScale: subtitlesSize, // transforms into "font-size: " + (fontScale*100) +"%"
                 fontStyle: 'NORMAL', // can be: "NORMAL", "BOLD", "BOLD_ITALIC", "ITALIC",
                 fontFamily: 'Helvetica',
                 fontGenericFamily: 'SANS_SERIF', // can be: "SANS_SERIF", "MONOSPACED_SANS_SERIF", "SERIF", "MONOSPACED_SERIF", "CASUAL", "CURSIVE", "SMALL_CAPITALS",
@@ -229,11 +231,11 @@ function goTo() {
 function seekTo(where) {
     if (where == "go") {
         device.seek(30, function() {
-            console.log('seeking forward!')
+            console.log('forward')
         });
     } else {
         device.seek(-30, function() {
-            console.log('seeking back!')
+            console.log('back')
         });
     }
 }
@@ -301,12 +303,16 @@ function startUpTime() {
 
 // add video to playlist
 function addtoplaylist(nameF, pathfullFile, pathfullSubs) {
-    Sortable.create(list);
     $('#filename').hide();
     $('#videoFile').hide();
     $('#list').append(
         '<li onclick="selectItem(this)" ondblclick="playList(this);" pathFile="' + pathfullFile + '" pathSubs="' + pathfullSubs + '">' + nameF + '<label for="load-subtitles"><i class="fa fa-file-text-o subtitlefromplaylist" aria-hidden="true"></i></label> <i onclick="delfromplaylist(this);" class="fa fa-times delfromplaylist" aria-hidden="true"></i></li>'
     );
+
+    setTimeout(
+        function() {
+            Sortable.create(list);
+        }, 1000);
 }
 
 // delete video from playlist
@@ -388,6 +394,7 @@ function addsubtoplaylist(fullpath) {
 
     var subtitleName = fullpath.split('\\').pop().replace('.srt', '');
 
+    // if no selected but has a same name of the video, set them
     $("li").each(function() {
         var videopath = $(this).attr("pathFile").substr(0, $(this).attr("pathFile").length - 4);;
         var videofileName = videopath.split('\\').pop();
@@ -399,7 +406,7 @@ function addsubtoplaylist(fullpath) {
     });
 }
 
-// stop event, and counter when chomecast appears
+// stop event and counter when chomecast appears
 function loadingEnd() {
     clearInterval(loading);
     $("#chromecastIcon-big").css('-webkit-transform', 'rotate(0deg)');
@@ -409,6 +416,7 @@ function loadingEnd() {
     clearInterval(startup);
 }
 
+//clear sub .vtt folder
 //original function @guybedford
 function ClearSubsFolder(){
     var dirPath = process.cwd() + '\\app\\temp\\subs';
@@ -424,6 +432,33 @@ function ClearSubsFolder(){
     fs.closeSync(fs.openSync(process.cwd() + '\\app\\temp\\subs\\empty', 'w'));
 }
 
+function ChangeSubtitlesSize(n){
+    $("#subtitleInput").attr("value", n);
+    subtitlesSize = n
+    device.changeSubtitlesSize(n, function(err, status){
+        if(err) console.log("error")
+    });
+}
+
+function SaveInConfig(type, value){
+    json = require('json-update');
+
+    if(type == "subs"){
+        json.update(process.cwd() + '\\app\\config.json',{subtitleSize:value})
+    }else if(type == "color"){
+        json.update(process.cwd() + '\\app\\config.json',{subtitleColor:value + 'FF'})
+    }
+
+}
+
+function ChangeSubtitlesColor(c){
+    SaveInConfig('color', c)
+    device.changeSubtitlesColor(c, function(err, status){
+        if(err) console.log("error")
+    });
+}
+
+// detect input change status
 $(function() {
      $("input:file").change(function (){
             var fileSubPath = $(this).val();
@@ -435,6 +470,7 @@ $(function() {
             }
      });
 });
+
 
 //debug
 console.log("deviceC.js loaded");

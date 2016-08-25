@@ -1,7 +1,7 @@
 var remoteVersion,
-  localVersion,
-  autoupdate,
-  localDev = false;
+    localVersion,
+    autoupdate,
+    localDev = false;
 
 debug(localDev);
 
@@ -14,12 +14,10 @@ function debug(localDev) {
 var gitrepo = "FlowCast";
 
 var request = require("request"),
-  getpkg = require('../package.json');
+    getpkg = require('../package.json');
 
 localVersion = getpkg.version;
 var url = "https://raw.githubusercontent.com/brai4u/" + gitrepo + "/master/package.json";
-
-requestUpdate();
 var checkUpdate = setInterval(function(){ requestUpdate() }, 5000);
 
 function requestUpdate(){

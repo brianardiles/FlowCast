@@ -27,12 +27,17 @@ var background = false;
 var media = null;
 var firstTime = true;
 
+//config
+var subtitlesSize,
+	subtitlesColor;
+
 // node requieres
 var http = require("http"),
     fs = require('fs'),
     util = require('util'),
     srt2vtt = require('srt2vtt'),
-    fileExists = require('file-exists');
+    fileExists = require('file-exists'),
+    jsonfile = require('jsonfile');
 
 var gui = require('nw.gui');
 

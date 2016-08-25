@@ -238,6 +238,21 @@ Device.prototype.changeSubtitlesSize = function(num, callback) {
     });
 };
 
+Device.prototype.changeSubtitlesColor = function(color, callback) {
+    var self = this;
+    
+    var newStyle = self.subtitles_style;
+    newStyle.foregroundColor = color + 'FF';
+    self.player.media.sessionRequest({
+        type: 'EDIT_TRACKS_INFO',
+        textTrackStyle: newStyle
+    }, function(err, status){
+        if (err) callback(err);
+        callback(null, status);
+    });
+};
+
+
 Device.prototype.close = function(callback) {
     if ( this.client ) {
         this.client.close();

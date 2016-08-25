@@ -12,6 +12,7 @@
     <script type="text/javascript" src="./js/deviceC.js"></script>
     <script type="text/javascript" src="./js/autoupdate.js"></script>
     <script type="text/javascript" src="./js/sortable.js"></script>
+    <script type="text/javascript" src="./js/config.js"></script>
 
 
     <link rel="stylesheet" type="text/css" href="./css/font-awesome.min.css">
@@ -75,6 +76,9 @@
                 }
                 return false;
             };
+
+            getConfig();
+            requestUpdate();
         });
 
         nw.Window.get().on('close', function() {
@@ -141,6 +145,28 @@
         <span id="timeEnd">0:00:00</span>
     </div>
     <div id="holder" class="holder">
+    </div>
+
+    <i id="open-config" class="fa fa-cog" aria-hidden="true"></i>
+    <div id="config">
+        <div id="content-config">
+            <i id="close-config" class="fa fa-times fa-x2" aria-hidden="true"></i>
+            Settings
+            <br><br>
+
+            <p id="subsConfigTitle">Subtitles Size:</p>
+            <div id="subtitles-size">
+                <input id="subtitlesRange" type="range" min="0.1" max="9" step="0.1" oninput="ChangeSubtitlesSize(this.value)" onchange="SaveInConfig('subs', this.value)" /><input id="subtitleInput" type="text" readonly>
+            </div>
+
+            <br><br>
+
+            <p>Subtitles Color:</p>
+            <select id="config-subs" onchange="ChangeSubtitlesColor(this.value)">
+                <option id="white" value="#FFFFFF">White</option>
+                <option id="yellow" value="#FFFF00">Yellow</option>
+            </select>
+        </div>
     </div>
 
     <input id="load-subtitles" type="file" accept=".srt">

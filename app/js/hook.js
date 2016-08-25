@@ -14,7 +14,6 @@ $(document).on("click", "#pause", function() {
         $('#pause').attr('class', 'fa fa-play fa-3x');
         $("#pause").attr("id", "play");
     });
-
 });
 
 $(document).on("click", "#stop", function() {
@@ -50,6 +49,21 @@ $(document).on("click", "#close", function() {
 $(document).on("click", "#min", function() {
     win.minimize();
 });
+
+$(document).on("click", "#close-config", function() {
+    $("#config").animate({
+        width: "0%",
+        opacity:"0"
+    })
+});
+
+$(document).on("click", "#open-config", function() {
+    $("#config").animate({
+        width: "35%",
+        opacity:"1"
+    })
+});
+
 
 //debug
 console.log("hook.js loaded");

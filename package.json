@@ -11,17 +11,16 @@
     "frame": false,
     "transparent": true
   },
-  
   "developerMode": "false",
-
   "dependencies": {
-    "chromecast-js": "git+https://github.com/brai4u/chromecast-js.git",
-    "srt2vtt": "*",
     "adm-zip": "*",
+    "chromecast-js": "git+https://github.com/brai4u/chromecast-js.git",
+    "file-exists": "*",
+    "json-update": "^3.0.0",
+    "jsonfile": "^2.3.1",
     "request": "*",
-    "file-exists": "*"
+    "srt2vtt": "*"
   },
-  
-  "version":"0.1.8-7",
-  "autoupdate":"1.8-7"
+  "version": "0.1.9",
+  "autoupdate": "1.9"
 }
