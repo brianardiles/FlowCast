@@ -9,7 +9,8 @@
     "min_height": 400,
     "max_width": 600,
     "frame": false,
-    "transparent": true
+    "transparent": true,
+    "icon": "app/image/flowcast.png"
   },
   "developerMode": "false",
   "dependencies": {
@@ -21,6 +22,6 @@
     "request": "*",
     "srt2vtt": "*"
   },
-  "version": "0.1.9-1",
-  "autoupdate": "1.9-1"
+  "version": "0.1.9-2",
+  "autoupdate": "1.9-2"
 }

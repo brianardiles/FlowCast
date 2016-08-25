@@ -1,8 +1,8 @@
-# FlowCast
+# FlowCast - Beta
 
 **FlowCast** is the easiest and cute way to send content to your Chromecast. Developer [@brai4u](https://twitter.com/brai4u)
 
-![FlowCast](http://puu.sh/qMn6h/5d21cec9be.png)
+![FlowCast](http://puu.sh/qOjDI/65f7562de7.png)
 v1.8-4
 
 # Features
@@ -11,7 +11,7 @@ v1.8-4
 * Easy way to add subtitles
 * Autoload subtitles whith the same name of video
 * AutoUpdate system
-* Cute :)
+* Customizable subtitles
 * Playlist
 
 # Getting Started
