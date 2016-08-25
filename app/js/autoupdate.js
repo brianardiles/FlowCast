@@ -22,7 +22,10 @@ var checkUpdate = setInterval(function(){ requestUpdate() }, 5000);
 
 function requestUpdate(){
   $("#version").html("version: " + localVersion);
-  $("#checkupdates").html("Checking updates...");
+  if(updating){
+    $("#checkupdates").html("Checking updates...");
+  }
+  
   request({
     url: url,
     json: true

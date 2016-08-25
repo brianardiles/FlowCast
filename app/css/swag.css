@@ -87,7 +87,6 @@ body {
     color: white;
     top: 11%;
     left: 84px;
-    font-size: 1.3em;
     position: absolute;
     width: 49%;
     word-wrap: break-word;
@@ -100,6 +99,7 @@ option {
     max-width: 47%;
     border:0px;
     outline:0px;
+    margin-top: 6px;
 }
 #videoFile {
     color: white;
@@ -176,10 +176,10 @@ option {
     cursor: pointer;
 }
 #playList li:hover {
-    background: rgba(255, 255, 255, 0.34);
+    background: rgba(33, 150, 243, 0.44)!important;
 }
 .selected {
-    background: rgba(255, 255, 255, 0.34)!important;
+    background: rgba(33, 150, 243, 0.44)!important;
 }
 #ChromecastDevice {
     color: white;
@@ -340,7 +340,7 @@ option {
     color: white;
     top: 5.3%;
     position: absolute;
-    background-color: rgb(41, 41, 41);
+    background-color: rgb(21, 21, 21);
     width: 0%;
     height: 75.6%;
     z-index: 9999;
