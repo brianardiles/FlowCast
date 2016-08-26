@@ -71,8 +71,14 @@ $(document).on("click", "#checkupdates", function() {
     }
 });
 
+$(document).on("click", "#progressbar", function(e) {
+    var percent = e.pageX / $(this).width() * 100;
+    $("#progress").animate({
+        width: percent + "%"
+    })
 
-
+    ChangeTimeFromBar(percent);
+});
 
 //debug
 console.log("hook.js loaded");

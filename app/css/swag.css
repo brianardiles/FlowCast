@@ -284,11 +284,18 @@ option {
 }
 .w3-progress-container {
     width: 100%;
-    height: 3px;
+    height: 4px;
+    transition: height 0.2s ease;
+    cursor:pointer;
+}
+
+.w3-progress-container:hover {
+    height: 12px!important;
 }
 #progressbar {
     position: absolute;
     bottom: 92px;
+    z-index: 99999;
 }
 .fa-plus {
     cursor: default;

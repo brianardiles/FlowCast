@@ -154,7 +154,7 @@ function statusBar() {
                 //console.log(tiempoCrudo * 100 / duration); // porcentaje debug
             $("#timeStart").html(currentT[0]);
             porciento = tiempoCrudo * 100 / duration;
-            $('#progress').attr('style', "width:" + porciento + "%");
+            $("#progress").animate({width: porciento + "%"})
             if (porciento >= 98) {
                 device.close();
                 CleanControlls();
@@ -470,6 +470,13 @@ $(function() {
      });
 });
 
+function ChangeTimeFromBar(p){
+    //porcentaje * total / 100
 
+    device.getStatus(function(status) {
+        var NewTime = p * status.media.duration / 100
+        device.seekTo(NewTime);
+    });
+}
 //debug
 console.log("deviceC.js loaded");
