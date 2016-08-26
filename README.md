@@ -20,7 +20,7 @@ v1.8-4
 
 (32 bits, user version)
 
-Download the setup and fun: [Setup v1.4](https://github.com/brai4u/FlowCast/releases/download/exeV1.4/FlowCast-setup-1.4.exe)
+Download the setup and fun: [Setup v1.9-8](https://github.com/brai4u/FlowCast/releases/download/exeV1.9-8/FlowCast-setup-1.9-8.exe)
 
 or
   (32 bits, dev version)
@@ -41,6 +41,8 @@ Changelog 25/03/2016
 * Fix sortable list
 * Fix update request
 * Add manual check for updates
+* Add control for status bar
+* Add pause / play with de space bar
 
 Changelog 24/08/2016:
 * Allow sortable playlist items
