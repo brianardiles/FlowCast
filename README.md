@@ -42,7 +42,7 @@ Changelog 25/03/2016
 * Fix update request
 * Add manual check for updates
 * Add control for status bar
-* Add pause / play with de space bar
+* Add pause / play with the space bar
 
 Changelog 24/08/2016:
 * Allow sortable playlist items

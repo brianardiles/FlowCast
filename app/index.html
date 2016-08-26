@@ -88,6 +88,21 @@
             }
             this.close(true);
         });
+
+        // keys
+
+        $(window).keydown(function (e){
+            if(e.which == 32){
+                if(pause){
+                    $("#play").click();
+                    pause = false
+                }
+                else {
+                    $("#pause").click();
+                    pause = true
+                }
+            }
+        })
     </script>
 </head>
 
