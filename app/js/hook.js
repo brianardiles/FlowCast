@@ -80,5 +80,6 @@ $(document).on("click", "#progressbar", function(e) {
     ChangeTimeFromBar(percent);
 });
 
+
 //debug
 console.log("hook.js loaded");

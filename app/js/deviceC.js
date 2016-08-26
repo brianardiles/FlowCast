@@ -468,6 +468,17 @@ $(function() {
                 reloadvalues();
             }
      });
+
+     $("#progressbar").on('mousemove', function (e) {
+        if(deviceStatus){
+                device.getStatus(function(status) {
+                    var percent = e.pageX / $(this).width() * 100;
+                    var timeMouseMove = percent * status.media.duration / 100
+                    var timeT = secondsTimeSpanToHMS(timeMouseMove).split('.');
+                    $("#timeStart").html(timeT[0]);
+             });
+        }
+    })
 });
 
 function ChangeTimeFromBar(p){
