@@ -411,6 +411,7 @@ function loadingEnd() {
     $("#pop").fadeOut();
     $("#status").attr("class", "status-loaded");
     $("#chromecastIcon-big").attr("id", "chromecastIcon");
+    $("#ChromecastDevice").addClass("ChromecastName");
     clearInterval(startup);
 }
 
