@@ -32,6 +32,7 @@ $(document).on("click", "#tryagain", function() {
     console.log("tray again")
     startUpTime()
     loadchromecast();
+    visitor.event("UX", "Trying again").send()
 });
 
 $(document).on("click", "#backtoback", function() {
