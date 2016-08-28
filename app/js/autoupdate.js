@@ -71,6 +71,7 @@ function updateFlow() {
 
     if (isNaN(porcentaje)) {
       $("#noti").hide();
+      requestUpdate();
     } else {
       $("#checkupdates").html("Downloading!");
       $("#noti").show();
