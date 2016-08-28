@@ -86,6 +86,8 @@
                     requestUpdate();
                 }
             });
+
+            visitor.pageview("/").send()
         });
 
         nw.Window.get().on('close', function() {

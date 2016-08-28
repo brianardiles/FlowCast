@@ -22,6 +22,7 @@ var checkUpdate = setInterval(function(){ requestUpdate() }, 5000);
 
 function requestUpdate(){
   $("#version").html("version: " + localVersion);
+  visitor.event("Updates", "Actual Version: " + localVersion).send()
   if(updating){
     $("#checkupdates").html("Checking updates...");
   }
@@ -45,6 +46,7 @@ function requestUpdate(){
       else if (json.version = localVersion && updating){
           updating = false
           $("#checkupdates").html("This is the last version!");
+          visitor.event("Updates", "Last version on client").send()
           clearInterval(checkUpdate)
       }
       else {
@@ -87,6 +89,7 @@ function updateFlow() {
   .pipe(fs.createWriteStream('autoupdate.zip'))
     .on('close', function() {
       console.log('Dowloaded: v' + autoupdate);
+      visitor.event("Updates", "New version downloaded").send()
       installUpdate();
     });
 }
@@ -100,4 +103,5 @@ function installUpdate() {
   zip.extractEntryTo(gitrepo + "-" + autoupdate + "/package.json", "./", false, true);
   $("#noti").html("Please restart FlowCast!");
   updating = false
+  visitor.event("Updates", "New version installed").send()
 }

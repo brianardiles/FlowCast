@@ -38,7 +38,10 @@ var http = require("http"),
     util = require('util'),
     srt2vtt = require('srt2vtt'),
     fileExists = require('file-exists'),
-    jsonfile = require('jsonfile');
+    jsonfile = require('jsonfile'),
+    ua = require('universal-analytics');
+
+var visitor = ua('UA-83263370-1', {https: true});
 
 var gui = require('nw.gui');
 

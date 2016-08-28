@@ -3,6 +3,7 @@ function startStreaming(status) {
     // no video file = no play
     if (!dropVideo) {
         alert("Load any video");
+        visitor.event("UX", "Play with out video").send()
         return;
     }
 
@@ -24,6 +25,7 @@ function startStreaming(status) {
     
     // if subtitles
     if (dropSubs) {
+        visitor.event("UX", "Play with subtitles").send()
         $("#ChromecastDevice").html("Streaming subtitles...");
         ServerSubs(dropSubs);
         media = {
@@ -51,6 +53,7 @@ function startStreaming(status) {
             }
         }
     } else {
+        visitor.event("UX", "Play with out subtitles").send()
         media = {
             url: 'http://' + ipLocal + ':8659/',
             cover: {
@@ -134,6 +137,8 @@ function CreateSubs(fullpath) {
 
         startStreaming();
     }
+
+    visitor.event("UX", "Create a vtt file").send()
 }
 
 // set duration of video
@@ -198,6 +203,8 @@ function stopStreaming() {
         $('#filename').html('');
         CleanControlls();
     });
+
+    visitor.event("UX", "Stop streaming").send()
 }
 
 // Set options no subtitle
@@ -240,6 +247,7 @@ function seekTo(where) {
 
 // function to load chromecast
 function loadchromecast() {
+    visitor.event("UX", "Loading ChromeCast").send()
     //background server
     ServerImage();
 
@@ -289,6 +297,7 @@ function startUpTime() {
 
         if (timerun >= 25) {
             console.log("se cierra");
+            visitor.event("UX", "Error finding chromecast").send()
             clearInterval(startup);
             clearInterval(loading);
             $("#pop").fadeIn();
@@ -311,6 +320,8 @@ function addtoplaylist(nameF, pathfullFile, pathfullSubs) {
         function() {
             Sortable.create(list);
         }, 1000);
+
+    visitor.event("UX", "Loaded new video").send()
 }
 
 // delete video from playlist
@@ -384,6 +395,8 @@ function nextPlayList() {
     }else{
         CleanControlls();
     }
+
+    visitor.event("UX", "AutoPlay from PlayList").send()
 }
 
 // dropsubtitle set to select video
@@ -437,6 +450,8 @@ function ChangeSubtitlesSize(n){
     device.changeSubtitlesSize(n, function(err, status){
         if(err) console.log("error")
     });
+
+    visitor.event("UX", "Change Subtitle Size").send()
 }
 
 function SaveInConfig(type, value){
@@ -444,8 +459,10 @@ function SaveInConfig(type, value){
 
     if(type == "subs"){
         json.update(process.cwd() + '\\app\\config.json',{subtitleSize:value})
+        visitor.event("UX", "Subtitles Size:" + value).send()
     }else if(type == "color"){
         json.update(process.cwd() + '\\app\\config.json',{subtitleColor:value + 'FF'})
+        visitor.event("UX", "Subtitles Color:" + value).send()
     }
 
 }
@@ -455,6 +472,8 @@ function ChangeSubtitlesColor(c){
     device.changeSubtitlesColor(c, function(err, status){
         if(err) console.log("error")
     });
+
+    visitor.event("UX", "Change Subtitle Color").send()
 }
 
 // detect input change status

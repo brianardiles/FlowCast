@@ -21,8 +21,9 @@
     "json-update": "^3.0.0",
     "jsonfile": "^2.3.1",
     "request": "*",
-    "srt2vtt": "*"
+    "srt2vtt": "*",
+    "universal-analytics": "^0.4.2"
   },
-  "version": "0.1.9-11",
-  "autoupdate": "1.9-11"
+  "version": "0.1.9-12",
+  "autoupdate": "1.9-12"
 }
