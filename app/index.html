@@ -78,7 +78,14 @@
             };
 
             getConfig();
-            requestUpdate();
+
+            // check internet
+            var isOnline = require('is-online');
+            isOnline(function(err, online) {
+                if(online){
+                    requestUpdate();
+                }
+            });
         });
 
         nw.Window.get().on('close', function() {

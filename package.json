@@ -17,11 +17,12 @@
     "adm-zip": "*",
     "chromecast-js": "git+https://github.com/brai4u/chromecast-js.git",
     "file-exists": "*",
+    "is-online": "^5.1.2",
     "json-update": "^3.0.0",
     "jsonfile": "^2.3.1",
     "request": "*",
     "srt2vtt": "*"
   },
-  "version": "0.1.9-9",
-  "autoupdate": "1.9-9"
+  "version": "0.1.9-10",
+  "autoupdate": "1.9-10"
 }
