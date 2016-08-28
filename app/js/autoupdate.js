@@ -1,7 +1,8 @@
 var remoteVersion,
     localVersion,
     autoupdate,
-    localDev = false;
+    localDev = false,
+    tryDownload = false;
 
 debug(localDev);
 
@@ -73,10 +74,13 @@ function updateFlow() {
 
     if (isNaN(porcentaje)) {
       $("#noti").hide();
-      requestUpdate();
+      if(!tryDownload){
+        requestUpdate();
+      }
     } else {
       $("#checkupdates").html("Downloading!");
       $("#noti").show();
+      tryDownload = true;
     }
 
     $("#noti").html("Updating: " + porcentaje.toFixed(0) + "%")
