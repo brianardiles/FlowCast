@@ -60,8 +60,8 @@ function requestUpdate(){
 function updateFlow() {
   var fileSize,
     size = 0;
-  console.log('https://codeload.github.com/'+gitrepo+'/FlowCast/zip/v'+ autoupdate)
-  request('https://codeload.github.com/'+gitrepo+'/FlowCast/zip/v'+ autoupdate)
+  console.log('https://codeload.github.com/brai4u/'+gitrepo+'/zip/v'+ autoupdate)
+  request('https://codeload.github.com/brai4u/'+gitrepo+'/zip/v'+ autoupdate)
     .on('response', function(response) {
       fileSize = response.headers['content-length'];
       clearInterval(checkUpdate);
