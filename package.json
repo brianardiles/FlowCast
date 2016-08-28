@@ -24,6 +24,6 @@
     "srt2vtt": "*",
     "universal-analytics": "^0.4.2"
   },
-  "version": "0.1.9-18",
-  "autoupdate": "1.9-18"
+  "version": "0.1.9-19",
+  "autoupdate": "1.9-19"
 }
