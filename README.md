@@ -20,7 +20,7 @@ v1.8-4
 
 (32 bits, user version)
 
-Download the setup and fun: [Setup v1.9-8](https://github.com/brai4u/FlowCast/releases/download/exeV1.9-8/FlowCast-setup-1.9-8.exe)
+Download the setup and fun: [Setup v1.9-11](https://github.com/brai4u/FlowCast/releases/download/v1.9-11exe/FlowCast-setup-1.9-11.exe)
 
 or
   (32 bits, dev version)
