@@ -73,7 +73,7 @@ function startStreaming(status) {
 
             if (resume) {
                 device.play(media, resume, function() {
-                    $('#play').attr('class', 'fa fa-pause fa-3x');
+                    $('#play').attr('src', 'image/pause.svg');
                     $('#play').attr('id', 'pause');
                     console.log("playing at: " + resume);
                     $("#ChromecastDevice").html(device.config.name);
@@ -90,7 +90,7 @@ function startStreaming(status) {
                     $("#ChromecastDevice").html(device.config.name);
                     setDuration();
                     statusBar();
-                    $('#play').attr('class', 'fa fa-pause fa-3x');
+                    $('#play').attr('src', 'image/pause.svg');
                     $('#play').attr('id', 'pause');
                     pause = false
                     resume = null;
@@ -138,6 +138,7 @@ function CreateSubs(fullpath) {
         startStreaming();
     }
 
+    //$("li[pathSubs=0]").
     visitor.event("UX", "Create a vtt file").send()
 }
 
@@ -185,7 +186,7 @@ function CleanControlls() {
     clearInterval(timerInterval);
     $("#timeStart").html("0:00:00");
     $("#timeEnd").html("0:00:00");
-    $('#pause').attr('class', 'fa fa-play fa-3x');
+    $('#pause').attr('src', 'image/play.svg')
     $("#pause").attr("id", "play");
     $('#progress').attr('style', "width:0%");
 }
@@ -209,7 +210,7 @@ function stopStreaming() {
 
 // Set options no subtitle
 function setnosub() {
-    $('#subSelect').html('<option value="nosubs">No subs</option>');
+    $('#subSelect').html('<option value="nosubs">No Subtitles</option>');
 }
 
 //back to start and pause
@@ -218,7 +219,7 @@ function backTo() {
         device.seekTo(-status.media.duration, function() {
             device.pause(function() {
                 pause = true
-                $('#pause').attr('class', 'fa fa-play fa-3x');
+                $('#pause').attr('src', 'image/play.svg');
                 $("#pause").attr("id", "play");
             });
         });
@@ -313,7 +314,7 @@ function addtoplaylist(nameF, pathfullFile, pathfullSubs) {
     $('#filename').hide();
     $('#videoFile').hide();
     $('#list').append(
-        '<li onclick="selectItem(this)" ondblclick="playList(this);" pathFile="' + pathfullFile + '" pathSubs="' + pathfullSubs + '">' + nameF + '<label for="load-subtitles"><i class="fa fa-file-text-o subtitlefromplaylist" aria-hidden="true"></i></label> <i onclick="delfromplaylist(this);" class="fa fa-times delfromplaylist" aria-hidden="true"></i></li>'
+        '<li onclick="selectItem(this)" ondblclick="playList(this);" pathFile="' + pathfullFile + '" pathSubs="' + pathfullSubs + '">' + nameF + '<label for="load-subtitles"><img id="svg" src="image/subtitles.svg" class="subtitlefromplaylist" /></i></label> <img id="svg" onclick="delfromplaylist(this);" src="image/close.svg" class="delfromplaylist" /></li>'
     );
 
     setTimeout(
@@ -322,6 +323,7 @@ function addtoplaylist(nameF, pathfullFile, pathfullSubs) {
         }, 1000);
 
     visitor.event("UX", "Loaded new video").send()
+    //imgtosvg();
 }
 
 // delete video from playlist
@@ -467,8 +469,12 @@ function SaveInConfig(type, value){
 
 }
 
-function ChangeSubtitlesColor(c){
+function ChangeSubtitlesColor(DataC){
+
+    var c = $(DataC).attr("color")
     SaveInConfig('color', c)
+    $('img.colorset').fadeOut("fast");
+    $(DataC).children().show();
     device.changeSubtitlesColor(c, function(err, status){
         if(err) console.log("error")
     });
@@ -498,6 +504,30 @@ $(function() {
              });
         }
     })
+
+    $('input[type="range"]').on("change mousemove", function () {
+        var val = ($(this).val() - $(this).attr('min')) / ($(this).attr('max') - $(this).attr('min'));
+
+        $(this).css('background-image',
+                    '-webkit-gradient(linear, left top, right top, '
+                    + 'color-stop(' + val + ', #50E3C2), '
+                    + 'color-stop(' + val + ', #242424)'
+                    + ')'
+        );
+    });
+    
+    // a little hack :D
+    $(document).ready(function (){
+    var val2 = $('input[type="range"]');
+    var val = (val2.val() - val2.attr('min')) / (val2.attr('max') - val2.attr('min'));
+
+        val2.css('background-image',
+                    '-webkit-gradient(linear, left top, right top, '
+                    + 'color-stop(' + val + ', #50E3C2), '
+                    + 'color-stop(' + val + ', #242424)'
+                    + ')'
+        );
+    })
 });
 
 function ChangeTimeFromBar(p){
@@ -508,5 +538,6 @@ function ChangeTimeFromBar(p){
         device.seekTo(NewTime);
     });
 }
+
 //debug
 console.log("deviceC.js loaded");

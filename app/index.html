@@ -32,18 +32,18 @@
                 return false
             };
 
-            var holder = $("div[id*='holder']")[0];
+            var holder = $("#holder")[0];
             holder.ondragover = function() {
-                $(this).attr("class", "holder-show");
+                $("#holder").attr("class", "holder-show");
                 return false;
             };
             holder.ondragleave = function() {
-                $(this).attr("class", "holder");
+                $("#holder").attr("class", "holder");
                 return false;
             };
             holder.ondrop = function(e) {
                 e.preventDefault();
-                $(this).attr("class", "holder");
+               $("#holder").attr("class", "holder");
                 var subdrop
                 for (var i = 0; i < e.dataTransfer.files.length; ++i) {
 
@@ -111,11 +111,16 @@
                     pause = true
                 }
             }
+
+            if(e.which == 27){
+                stopStreaming();
+            }
         })
     </script>
 </head>
 
 <body>
+<div id="fakebody"></div>
     <div id="noti">
     </div>
     <div id="toolbar">
@@ -123,19 +128,19 @@
         <span id="min"></span>
         <span id="tooltext">Flow Cast</span>
     </div>
-    <i id="videoFile" class="fa fa-file-video-o fa-2x" aria-hidden="true"></i>
+    <img id="videoFile" src="image/flowcast.svg" />
     <div id="filename">
         Drag & drop a video here :)
     </div>
 
     <div id="playList">
-        <ul id="list" style="list-style-type:none">
+        <ul id="list">
         </ul>
     </div>
-    <i id="subFile" class="fa fa-file-text-o fa-2x" aria-hidden="true"></i>
+    <img src="image/subtitles.svg" id="subFile"/>
     <div id="subtitles-name">
         <select id="subSelect" onchange="SelectData(this);">
-            <option value="nosubs">No subs</option>
+            <option value="nosubs">No Subtitles</option>
         </select>
     </div>
     <div id="pop">
@@ -159,37 +164,38 @@
     <div id="bar">
         <span id="timeStart">0:00:00</span>
         <div class="controlls center">
-            <i id="backtoback" class="fa fa-step-backward fa-2x" aria-hidden="true"></i>
-            <i id="back" class="fa fa-backward fa-2x" aria-hidden="true"></i>
-            <i id="play" class="fa fa-play fa-3x" aria-hidden="true"></i>
-            <i id="stop" class="fa fa-stop fa-3x" aria-hidden="true"></i>
-            <i id="go" class="fa fa-forward fa-2x" aria-hidden="true"></i>
-            <i id="gotogo" class="fa fa-step-forward fa-2x" aria-hidden="true"></i>
+            <img class="ctrl" id="backtoback" src="image/to-start.svg" id="open-config"/>
+            <img class="ctrl" id="back" src="image/fast-back.svg" id="open-config"/>
+            <img class="ctrl" id="play" src="image/play.svg" id="open-config"/>
+            <img class="ctrl" id="go" src="image/fast-forward.svg" id="open-config"/>
+            <img class="ctrl" id="gotogo" src="image/to-end.svg" id="open-config"/>
         </div>
         <span id="timeEnd">0:00:00</span>
     </div>
     <div id="holder" class="holder">
     </div>
 
-    <i id="open-config" class="fa fa-cog" aria-hidden="true"></i>
+    <img src="image/settings.svg" id="open-config"/>to-start.svg
     <div id="config">
         <div id="content-config">
-            <i id="close-config" class="fa fa-times fa-x2" aria-hidden="true"></i>
-            Settings
-            <br><br>
-
-            <p id="subsConfigTitle">Subtitles Size:</p>
+            <img id="close-config" src="image/close.svg" />
+            <h3 class="settings">Settings</h3>
+            <p id="subsConfigTitle">Subtitles Size</p>
             <div id="subtitles-size">
-                <input id="subtitlesRange" type="range" min="0.1" max="9" step="0.1" oninput="ChangeSubtitlesSize(this.value)" onchange="SaveInConfig('subs', this.value)" /><input id="subtitleInput" type="text" readonly>
+                <input id="subtitlesRange" type="range" min="0.1" max="6" step="0.1" oninput="ChangeSubtitlesSize(this.value)" onchange="SaveInConfig('subs', this.value)" />
+                <p id="x">x</p><input id="subtitleInput" type="text" readonly>
             </div>
 
             <br><br>
 
-            <p>Subtitles Color:</p>
-            <select id="config-subs" onchange="ChangeSubtitlesColor(this.value)">
-                <option id="white" value="#FFFFFF">White</option>
-                <option id="yellow" value="#FFFF00">Yellow</option>
-            </select>
+            <p id="subcolorsP">Subtitles Color</p>
+            <div id="sub-white" color="#FFFFFF" onclick="ChangeSubtitlesColor(this)">
+                <img id="whiteCheck" class="colorset" src="image/check.svg">
+            </div>
+            
+            <div id="sub-yellow" color="#FFFF00" onclick="ChangeSubtitlesColor(this)">
+                <img id="yellowCheck" class="colorset" class="colorset" src="image/check.svg">
+            </div>
 
             <p id="version"></p>
             <p id="checkupdates">Check Updates</p>

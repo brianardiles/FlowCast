@@ -1,7 +1,7 @@
 $(document).on("click", "#play", function() {
     if (pause) {
         device.unpause();
-        $('#play').attr('class', 'fa fa-pause fa-3x');
+        $('#play').attr('src', 'image/pause.svg');
         $('#play').attr('id', 'pause');
         return 1;
     }
@@ -11,7 +11,7 @@ $(document).on("click", "#play", function() {
 $(document).on("click", "#pause", function() {
     device.pause(function() {
         pause = true
-        $('#pause').attr('class', 'fa fa-play fa-3x');
+        $('#pause').attr('src', 'image/play.svg');
         $("#pause").attr("id", "play");
     });
 });
@@ -53,16 +53,20 @@ $(document).on("click", "#min", function() {
 
 $(document).on("click", "#close-config", function() {
     $("#config").animate({
-        width: "0%",
-        opacity:"0"
+        height: "0px",
+        opacity: "0"
     })
+
+    $("#config").css("visibility", "hidden");
 });
 
 $(document).on("click", "#open-config", function() {
     $("#config").animate({
-        width: "35%",
-        opacity:"1"
+        height: "58.6%",
+        opacity: "1",
     })
+
+    $("#config").css("visibility", "visible");
 });
 
 $(document).on("click", "#checkupdates", function() {

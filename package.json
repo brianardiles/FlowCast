@@ -1,5 +1,5 @@
 {
-  "name": "FlowCast",
+  "name": "Flow Cast",
   "main": "app/index.html",
   "window": {
     "toolbar": false,
@@ -8,9 +8,11 @@
     "min_width": 600,
     "min_height": 400,
     "max_width": 600,
+    "max_height": 600,
     "frame": false,
     "transparent": true,
-    "icon": "app/image/flowcast.png"
+    "icon": "app/image/flowcast.png",
+    "resizable" : false
   },
   "developerMode": "false",
   "dependencies": {
@@ -24,6 +26,6 @@
     "srt2vtt": "*",
     "universal-analytics": "^0.4.2"
   },
-  "version": "0.1.9-19",
-  "autoupdate": "1.9-19"
+  "version": "0.2.0",
+  "autoupdate": "2.0"
 }
