@@ -22,7 +22,7 @@ body {
     -webkit-border-radius: 4px;
     border-radius: 4px;
     padding: 10px;
-    top: 78px;
+    top: 87px;
     right: 20px;
     color: #fff;
     font-family: sans-serif;
@@ -30,6 +30,7 @@ body {
     z-index: 99999999;
     display: none;
     text-align: center;
+    color: black;
 }
 #bar {
     bottom: 0px;
@@ -47,6 +48,14 @@ body {
     color: white;
     text-align: center;
 }
+
+#play, #pause{
+    width: 44px;
+    height: 53px;
+    top: -3px;
+    position: relative;
+}
+
 .center {
     position: absolute;
     top: 50%;
@@ -417,11 +426,12 @@ option {
     top: 17.3%;
     position: absolute;
     background-color: rgb(0, 0, 0);
-    width: 100%;
+    width: 99.5%;
     height: 0px;
     z-index: 9999;
     opacity: 0;
     visibility: hidden;
+    left:1px;
 }
 
 .settings{
@@ -550,6 +560,7 @@ input[type=range]::-webkit-slider-thumb {
 .ctrl{
     margin: 11px;
     cursor: pointer;
+    margin-top: 20px;
 }
 
 #backtoback, #back, #go, #gotogo{

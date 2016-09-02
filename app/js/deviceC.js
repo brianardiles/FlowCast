@@ -2,7 +2,8 @@ function startStreaming(status) {
     
     // no video file = no play
     if (!dropVideo) {
-        alert("Load any video");
+        $("#noti").fadeIn(100)
+        $("#noti").html("Load any video before hit play button").delay(2000).fadeOut(100);
         visitor.event("UX", "Play with out video").send()
         return;
     }
@@ -473,8 +474,8 @@ function ChangeSubtitlesColor(DataC){
 
     var c = $(DataC).attr("color")
     SaveInConfig('color', c)
-    $('img.colorset').fadeOut("fast");
-    $(DataC).children().show();
+    $('img.colorset').fadeOut(100);
+    $(DataC).children().fadeIn(100);
     device.changeSubtitlesColor(c, function(err, status){
         if(err) console.log("error")
     });
