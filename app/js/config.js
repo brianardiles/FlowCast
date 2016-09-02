@@ -15,8 +15,8 @@ function getConfig(){
 	$("#subtitleInput").attr("value", subtitlesSize);
 	
 	if(subtitlesColor == "#FFFFFFFF"){
-		$("#white").attr("selected", "selected");
+		$("#whiteCheck").show();
 	}else if(subtitlesColor == "#FFFF00FF"){
-		$("#yellow").attr("selected", "selected");
+		$("#yellowCheck").show();
 	}
 }
