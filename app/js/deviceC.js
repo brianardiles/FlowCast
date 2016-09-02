@@ -139,6 +139,7 @@ function CreateSubs(fullpath) {
         startStreaming();
     }
 
+    checkSubtitleIconStatus()
     //$("li[pathSubs=0]").
     visitor.event("UX", "Create a vtt file").send()
 }
@@ -321,6 +322,7 @@ function addtoplaylist(nameF, pathfullFile, pathfullSubs) {
     setTimeout(
         function() {
             Sortable.create(list);
+            checkSubtitleIconStatus();
         }, 1000);
 
     visitor.event("UX", "Loaded new video").send()
@@ -538,6 +540,15 @@ function ChangeTimeFromBar(p){
         var NewTime = p * status.media.duration / 100
         device.seekTo(NewTime);
     });
+}
+
+
+function checkSubtitleIconStatus(){
+    $("li").each(function (){
+        if($(this).attr("pathsubs") !=0){
+            $(this).children().children().css("opacity", "1")
+        }
+    })
 }
 
 //debug
