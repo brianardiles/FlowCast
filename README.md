@@ -3,7 +3,7 @@
 **FlowCast** is the easiest and cute way to send content to your Chromecast. Developer [@brai4u](https://twitter.com/brai4u)
 
 ![FlowCast](http://i.imgur.com/Pecxoq8.png)
-v1.9-18
+v0.2.0
 
 # Features
 
@@ -33,6 +33,16 @@ or
 * ~~Playlist~~
 
 #Changelog
+
+Changelog: 02/09/2016
+
+* New design
+* Fix: Controlls position
+* Fix: More fast check icon for subtitles color
+* Fix: Settings border
+* Fix: Notification position and color
+* Fix: Msg use notification
+
 Changelog 25/03/2016
 * Add setting menu
 * Add change subtitles color on the fly
