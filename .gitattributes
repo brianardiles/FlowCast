@@ -15,3 +15,32 @@
 *.PDF	 diff=astextplain
 *.rtf	 diff=astextplain
 *.RTF	 diff=astextplain
+
+#Export for autoupdate :D
+
+locales export-ignore
+pnacl export-ignore
+.gitatrributes export-ignore
+.gitignore export-ignore
+chromedriver.exe export-ignore
+d3dcompiler_47.dll export-ignore
+ffmpeg.dll export-ignore
+icon.ico export-ignore
+icudtl.dat export-ignore
+libEGL.dll export-ignore
+libGLESv2.dll export-ignore
+nacl_irt_x86_32.nexe export-ignore
+natives_blob.bin export-ignore
+node.dll export-ignore
+nw.dll export-ignore
+nw.exe export-ignore
+nw_100_percent.pak export-ignore
+nw_200_percent.pak export-ignore
+nw_elf.dll export-ignore
+nw_material_100_percent.pak export-ignore
+nw_material_200_percent.pak
+nwjc.exe export-ignore
+payload.exe export-ignore
+README.md export-ignore
+resources.pak export-ignore
+snapshot_blob.bin export-ignore
