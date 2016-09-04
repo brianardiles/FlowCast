@@ -20,7 +20,7 @@
 
 locales export-ignore
 pnacl export-ignore
-.gitatrributes export-ignore
+.gitattributes export-ignore
 .gitignore export-ignore
 chromedriver.exe export-ignore
 d3dcompiler_47.dll export-ignore
@@ -38,7 +38,7 @@ nw_100_percent.pak export-ignore
 nw_200_percent.pak export-ignore
 nw_elf.dll export-ignore
 nw_material_100_percent.pak export-ignore
-nw_material_200_percent.pak
+nw_material_200_percent.pak export-ignore
 nwjc.exe export-ignore
 payload.exe export-ignore
 README.md export-ignore
