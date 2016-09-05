@@ -1,5 +1,5 @@
 {
-  "name": "Flow Cast",
+  "name": "FlowCast",
   "main": "app/index.html",
   "window": {
     "toolbar": false,
@@ -17,15 +17,15 @@
   
   "developerMode": "false",
   "dependencies": {
-    "adm-zip": "*",
+    "adm-zip": "0.4.7",
     "chromecast-js": "git+https://github.com/brai4u/chromecast-js.git",
-    "file-exists": "*",
-    "is-online": "^5.1.2",
-    "json-update": "^3.0.0",
-    "jsonfile": "^2.3.1",
-    "request": "*",
-    "srt2vtt": "*",
-    "universal-analytics": "^0.4.2"
+    "file-exists": "2.0.0",
+    "is-online": "5.1.2",
+    "json-update": "3.0.0",
+    "jsonfile": "2.3.1",
+    "request": "2.74.0",
+    "srt2vtt": "1.3.1",
+    "universal-analytics": "0.4.2"
   },
   "version": "0.2.1-1",
   "autoupdate": "2.1-1"
