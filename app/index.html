@@ -69,6 +69,9 @@
                             addtoplaylist(FileName, fullpath, 0);
                         }
 
+                    } else if (ext == "srt") {
+                        addsubtoplaylist(fullpath);
+                        reloadvalues();
                     }
                 }
                 return false;
@@ -92,8 +95,6 @@
             if (deviceStatus) {
                 stopStreaming();
             }
-
-            //close windows
             this.close(true);
         });
 
