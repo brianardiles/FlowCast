@@ -1,5 +1,5 @@
 {
-  "name": "Flow Cast",
+  "name": "FlowCast",
   "main": "app/index.html",
   "window": {
     "toolbar": false,
