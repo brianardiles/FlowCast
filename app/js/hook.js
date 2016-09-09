@@ -1,6 +1,6 @@
 $(document).on("click", "#play", function() {
     if (pause) {
-        device.unpause();
+        device.resume();
         $('#play').attr('src', 'image/pause.svg');
         $('#play').attr('id', 'pause');
         return 1;

@@ -21,7 +21,8 @@ var device,
 	startup,
 	timerun,
 	changeSub,
-	updating = false;
+	updating = false,
+	chromecasts;
 
 var deviceStatus = false;
 var background = false;

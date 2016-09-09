@@ -1,3 +1,5 @@
+var subsStyle
+
 function startStreaming(status) {
     
     // no video file = no play
@@ -24,22 +26,8 @@ function startStreaming(status) {
     $("#ChromecastDevice").html("Streaming video...");
     ServerVideo(dropVideo);
     
-    // if subtitles
-    if (dropSubs) {
-        visitor.event("UX", "Play with subtitles").send()
-        $("#ChromecastDevice").html("Streaming subtitles...");
-        ServerSubs(dropSubs);
-        media = {
-            url: 'http://' + ipLocal + ':8659/',
-            subtitles: [{
-                language: 'en-US',
-                url: 'http://' + ipLocal + ':8658/',
-                name: 'English',
-            }],
-            cover: {
-                title: FileName
-            },
-            subtitles_style: {
+    //subconfig
+    subsStyle = {
                 backgroundColor: '#FFFFFF00', // see http://dev.w3.org/csswg/css-color/#hex-notation
                 foregroundColor: subtitlesColor, // see http://dev.w3.org/csswg/css-color/#hex-notation
                 edgeType: 'DROP_SHADOW', // can be: "NONE", "OUTLINE", "DROP_SHADOW", "RAISED", "DEPRESSED"
@@ -52,56 +40,46 @@ function startStreaming(status) {
                 windowRoundedCornerRadius: 0, // radius in px
                 windowType: 'NONE' // can be: "NONE", "NORMAL", "ROUNDED_CORNERS"
             }
+
+    // if subtitles
+    if (dropSubs) {
+        visitor.event("UX", "Play with subtitles").send()
+        $("#ChromecastDevice").html("Streaming subtitles...");
+        ServerSubs(dropSubs);
+        console.log("EEEEEEEEEEEEEEEEEEEEEEEEEEEEE: " + resume)
+        if(!resume){
+            device.play('http://' + ipLocal + ':8659/', {
+              title: FileName,
+              type: 'video/mp4',
+              subtitles: ['http://' + ipLocal + ':8658/'],
+              textTrackStyle:subsStyle,
+              autoSubtitles: true
+            });
         }
-    } else {
-        visitor.event("UX", "Play with out subtitles").send()
-        media = {
-            url: 'http://' + ipLocal + ':8659/',
-            cover: {
-                title: FileName
-            }
+        else{
+            device.play('http://' + ipLocal + ':8659/', {
+              title: FileName,
+              type: 'video/mp4',
+              subtitles: ['http://' + ipLocal + ':8658/'],
+              textTrackStyle:subsStyle,
+              autoSubtitles: true,
+              seek: resume
+            });
         }
+    } else{
+        device.play('http://' + ipLocal + ':8659/', {tile: FileName, type: 'video/mp4'});
     }
 
-    //always force a fresh conection
-    chromecastjs = require('chromecast-js')
-    var browser = new chromecastjs.Browser()
-
-    browser.on('deviceOn', function(_device) {
-        device = _device;
-        device.connect()
-        device.on('connected', function() {
-
-            if (resume) {
-                device.play(media, resume, function() {
-                    $('#play').attr('src', 'image/pause.svg');
-                    $('#play').attr('id', 'pause');
-                    console.log("playing at: " + resume);
-                    $("#ChromecastDevice").html(device.config.name);
-                    setDuration();
-                    statusBar();
-                    resume = null;
-                    dropSubs = null;
-                    deviceStatus = true;
-                    changeSub = false;
-                });
-            } else {
-                device.play(media, 0, function() {
-                    console.log("ChromeCast IP: " + device.host);
-                    $("#ChromecastDevice").html(device.config.name);
-                    setDuration();
-                    statusBar();
-                    $('#play').attr('src', 'image/pause.svg');
-                    $('#play').attr('id', 'pause');
-                    pause = false
-                    resume = null;
-                    dropSubs = null;
-                    deviceStatus = true;
-                    changeSub = false;
-                });
-            }
-        })
-    })
+    console.log("ChromeCast IP: " + device.host);
+    $("#ChromecastDevice").html(device.name);
+    setDuration();
+    statusBar();
+    $('#play').attr('src', 'image/pause.svg');
+    $('#play').attr('id', 'pause');
+    pause = false
+    dropSubs = null;
+    deviceStatus = true;
+    changeSub = false;   
 }
 
 // Call from one click over on item
@@ -132,12 +110,12 @@ function CreateSubs(fullpath) {
 
     // if playing same video, load las time
     if (changeSub && dropVideo == fileVideo) {
-        device.getStatus(function(newStatus) {
-            resume = newStatus.currentTime
+        device.status(function(err, newStatus) {
+            resume = newStatus.currentTime;
+            startStreaming();
         });
-
-        startStreaming();
     }
+
 
     checkSubtitleIconStatus()
     //$("li[pathSubs=0]").
@@ -146,7 +124,7 @@ function CreateSubs(fullpath) {
 
 // set duration of video
 function setDuration() {
-    device.getStatus(function(status) {
+    device.status(function(err, status) {
         timeFinal = secondsTimeSpanToHMS(status.media.duration).split('.')
         $("#timeEnd").html(timeFinal[0]);
         duration = status.media.duration;
@@ -156,15 +134,13 @@ function setDuration() {
 // update status bar
 function statusBar() {
     timerInterval = setInterval(function() {
-        device.getStatus(function(newStatus) {
+        device.status(function(err, newStatus) {
             tiempoCrudo = newStatus.currentTime;
             currentT = secondsTimeSpanToHMS(newStatus.currentTime).split('.')
-                //console.log(tiempoCrudo * 100 / duration); // porcentaje debug
             $("#timeStart").html(currentT[0]);
             porciento = tiempoCrudo * 100 / duration;
             $("#progress").animate({width: porciento + "%"})
             if (porciento >= 98) {
-                device.close();
                 CleanControlls();
                 nextPlayList();
             }
@@ -190,23 +166,20 @@ function CleanControlls() {
     $("#timeEnd").html("0:00:00");
     $('#pause').attr('src', 'image/play.svg')
     $("#pause").attr("id", "play");
-    $('#progress').attr('style', "width:0%");
+    $('#progress').attr('style', "width:0%!important");
 }
 
 // stop streaming :P
 function stopStreaming() {
     deviceStatus = false;
-    device.stop(function() {
-        device.close();
-        device = undefined;
-        deviceStatus = false;
-        dropSubs = null;
-        dropVideo = null;
-        pause = false;
-        $('#filename').html('');
-        CleanControlls();
-    });
-
+    device.stop()
+    device = undefined;
+    deviceStatus = false;
+    dropSubs = null;
+    dropVideo = null;
+    pause = false;
+    $('#filename').html('');
+    CleanControlls();
     visitor.event("UX", "Stop streaming").send()
 }
 
@@ -217,8 +190,8 @@ function setnosub() {
 
 //back to start and pause
 function backTo() {
-    device.getStatus(function(status) {
-        device.seekTo(-status.media.duration, function() {
+    device.status(function(err, status) {
+        device.seek(-status.media.duration, function() {
             device.pause(function() {
                 pause = true
                 $('#pause').attr('src', 'image/play.svg');
@@ -230,20 +203,24 @@ function backTo() {
 
 // next video of playlist manual
 function goTo() {
-    device.getStatus(function(status) {
-        device.seekTo(status.media.duration - 1);
+    device.status(function(err, status) {
+        device.seek(status.media.duration - 1);
     });
 }
 
 // seek to, -30segs / +30seg
 function seekTo(where) {
     if (where == "go") {
-        device.seek(30, function() {
-            console.log('forward')
+        device.status(function(err, status) {
+            device.seek(status.currentTime + 30, function() {
+                console.log('forward')
+            });
         });
     } else {
-        device.seek(-30, function() {
-            console.log('back')
+        device.status(function(err, status) {
+            device.seek(status.currentTime - 30, function() {
+                console.log('back')
+            });
         });
     }
 }
@@ -263,22 +240,14 @@ function loadchromecast() {
     //view
 
     //set background
-    chromecastjs = require('chromecast-js')
-    var browser = new chromecastjs.Browser()
-
-    browser.on('deviceOn', function(_device) {
-        $("#ChromecastDevice").html("Searching devices");
-        device = _device;
-        console.log(device.host);
-        device.connect()
-        $("#ChromecastDevice").html("Conecting at device");
-        device.on('connected', function() {
-            $("#ChromecastDevice").html(device.config.name);
-            device.background('http://' + ipLocal + ':8660/', function() {
-                loadingEnd();
-                background = true;
-            });
-        })
+    var chromecasts = require('chromecasts')()
+        //chromecasts.update()
+        chromecasts.on('update', function (_device) {
+        device = _device
+        device.play('http://' + ipLocal + ':8660/', {type: 'image/png'});
+        $("#ChromecastDevice").html(device.name);
+        loadingEnd();
+        background = true;
     })
 }
 
@@ -397,6 +366,7 @@ function nextPlayList() {
     var nextitem = $('li[playing=true]').next()
     if (nextitem.is('li')) {
         $(nextitem).dblclick();
+        console.log("holamext")
     }else{
         CleanControlls();
     }
@@ -450,9 +420,10 @@ function ClearSubsFolder(){
 }
 
 function ChangeSubtitlesSize(n){
+    subsStyle.fontScale = n
     $("#subtitleInput").attr("value", n);
     subtitlesSize = n
-    device.changeSubtitlesSize(n, function(err, status){
+    device.changeSubtitlesSize(subsStyle, function(err, status){
         if(err) console.log("error")
     });
 
@@ -478,7 +449,8 @@ function ChangeSubtitlesColor(DataC){
     SaveInConfig('color', c)
     $('img.colorset').fadeOut(100);
     $(DataC).children().fadeIn(100);
-    device.changeSubtitlesColor(c, function(err, status){
+    subsStyle.foregroundColor = c + 'FF'
+    device.changeSubtitlesColor(subsStyle, function(err, status){
         if(err) console.log("error")
     });
 
@@ -499,7 +471,7 @@ $(function() {
 
      $("#progressbar").on('mousemove', function (e) {
         if(deviceStatus){
-                device.getStatus(function(status) {
+                device.status(function(err, status) {
                     var percent = e.pageX / $(this).width() * 100;
                     var timeMouseMove = percent * status.media.duration / 100
                     var timeT = secondsTimeSpanToHMS(timeMouseMove).split('.');
@@ -536,9 +508,9 @@ $(function() {
 function ChangeTimeFromBar(p){
     //porcentaje * total / 100
 
-    device.getStatus(function(status) {
+    device.status(function(err, status) {
         var NewTime = p * status.media.duration / 100
-        device.seekTo(NewTime);
+        device.seek(NewTime);
     });
 }
 

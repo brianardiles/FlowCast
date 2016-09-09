@@ -187,11 +187,12 @@ option {
     position: absolute;
     z-index: 9999;
     color: white;
-    width: 100%;
+    width: 99.7%;
     height: auto;
     overflow-y: auto;
     overflow-x: hidden;
     max-height: 56.4%;
+    left: 1px;
 }
 #playList li {
     padding: 8px;
@@ -426,7 +427,7 @@ option {
     top: 17.3%;
     position: absolute;
     background-color: rgb(0, 0, 0);
-    width: 99.5%;
+    width: 99.7%;
     height: 0px;
     z-index: 9999;
     opacity: 0;
