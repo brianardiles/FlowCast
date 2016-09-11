@@ -46,7 +46,6 @@ function startStreaming(status) {
         visitor.event("UX", "Play with subtitles").send()
         $("#ChromecastDevice").html("Streaming subtitles...");
         ServerSubs(dropSubs);
-        console.log("EEEEEEEEEEEEEEEEEEEEEEEEEEEEE: " + resume)
         if(!resume){
             device.play('http://' + ipLocal + ':8659/', {
               title: FileName,
@@ -100,7 +99,7 @@ function CreateSubs(fullpath) {
     dropSubs = fullpath
     filesubtmp = fullpath.split('\\').pop().replace('.srt', '.vtt')
     var srtData = fs.readFileSync(dropSubs);
-    srt2vtt(srtData, function(err, vttData) {
+    srt2vtt(srtData, '65001', function(err, vttData) {
         if (err) throw new Error(err);
         var destSub = process.cwd() + '\\app\\temp\\subs\\' + filesubtmp;
         fs.writeFileSync(destSub, vttData);
@@ -118,7 +117,6 @@ function CreateSubs(fullpath) {
 
 
     checkSubtitleIconStatus()
-    //$("li[pathSubs=0]").
     visitor.event("UX", "Create a vtt file").send()
 }
 
@@ -366,7 +364,6 @@ function nextPlayList() {
     var nextitem = $('li[playing=true]').next()
     if (nextitem.is('li')) {
         $(nextitem).dblclick();
-        console.log("holamext")
     }else{
         CleanControlls();
     }
