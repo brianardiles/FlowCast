@@ -99,12 +99,17 @@ function CreateSubs(fullpath) {
     dropSubs = fullpath
     filesubtmp = fullpath.split('\\').pop().replace('.srt', '.vtt')
     var srtData = fs.readFileSync(dropSubs);
-    srt2vtt(srtData, '65001', function(err, vttData) {
+    var jschardet = require("jschardet");
+
+    var encoding = require("encoding");
+    var srtDataF = encoding.convert(srtData, 'UTF-8', jschardet.detect(srtData).encoding);
+
+    srt2vtt(srtDataF, '65001',function(err, vttData) {
         if (err) throw new Error(err);
         var destSub = process.cwd() + '\\app\\temp\\subs\\' + filesubtmp;
-        fs.writeFileSync(destSub, vttData);
+        fs.writeFileSync(destSub, vttData, 'utf8');
         dropSubs = destSub;
-    });
+    })
     var fileVideo = $(".selected").attr("pathFile")
 
     // if playing same video, load las time
