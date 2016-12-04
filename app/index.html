@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>FlowCast</title>
+    <script type="text/javascript" src="./js/global.js"></script>
+    <script type="text/javascript" src="./js/jquery-3.1.0.min.js"></script>
+    <script type="text/javascript" src="./js/servervideo.js"></script>
+    <script type="text/javascript" src="./js/serversubs.js"></script>
+    <script type="text/javascript" src="./js/serverimage.js"></script>
+    <script type="text/javascript" src="./js/hook.js"></script>
+    <script type="text/javascript" src="./js/deviceC.js"></script>
+    <script type="text/javascript" src="./js/autoupdate.js"></script>
+    <script type="text/javascript" src="./js/sortable.js"></script>
+    <script type="text/javascript" src="./js/config.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="./css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/bar.css">
+    <link rel="stylesheet" type="text/css" href="./css/swag.css">
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            startUpTime();
+            loadchromecast();
+            window.ondragover = function(e) {
+                e.preventDefault();
+                return false
+            };
+            window.ondrop = function(e) {
+                e.preventDefault();
+                return false
+            };
+
+            var holder = $("#holder")[0];
+            holder.ondragover = function() {
+                $("#holder").attr("class", "holder-show");
+                return false;
+            };
+            holder.ondragleave = function() {
+                $("#holder").attr("class", "holder");
+                return false;
+            };
+            holder.ondrop = function(e) {
+                e.preventDefault();
+               $("#holder").attr("class", "holder");
+                var subdrop
+                for (var i = 0; i < e.dataTransfer.files.length; ++i) {
+
+                    ext = e.dataTransfer.files[i].path.split('.').pop();
+                    fullpath = e.dataTransfer.files[i].path
+                    name = fullpath.substr(0, fullpath.length - 4);
+                    FileName = fullpath.split('\\').pop();
+                    if (ext == "mp4" || ext == "mkv") {
+                        dropVideo = fullpath
+
+                        // no repeat file
+                        $("li").each(function() {
+                            if ($(this).attr("pathFile") == fullpath) {
+                                $(this).remove()
+                            }
+                        });
+
+                        if (fileExists(name + '.srt')) {
+                            console.log("Subs with de the name loaded.");
+                            CreateSubs(name + '.srt')
+                            addtoplaylist(FileName, fullpath, name + '.srt');
+                        } else {
+                            addtoplaylist(FileName, fullpath, 0);
+                        }
+                    }
+                }
+                return false;
+            };
+
+            getConfig();
+
+            // check internet
+            var isOnline = require('is-online');
+            isOnline(function(err, online) {
+                if(online){
+                    requestUpdate();
+                }
+            });
+
+            visitor.pageview("/").send()
+        });
+
+        nw.Window.get().on('close', function() {
+            ClearSubsFolder()
+            if (deviceStatus) {
+                stopStreaming();
+            }
+            this.close(true);
+        });
+
+        // keys
+
+        $(window).keydown(function (e){
+            if(e.which == 32){
+                if(pause){
+                    $("#play").click();
+                    pause = false
+                }
+                else {
+                    $("#pause").click();
+                    pause = true
+                }
+            }
+
+            if(e.which == 27){
+                stopStreaming();
+                setbackground();
+            }
+        })
+
+
+    </script>
+</head>
+
+<body>
+<div id="fakebody"></div>
+    <div id="noti">
+    </div>
+    <div id="toolbar">
+        <span id="close"></span>
+        <span id="min"></span>
+        <span id="tooltext">Flow Cast</span>
+    </div>
+    <img id="videoFile" src="image/flowcast.svg" />
+    <div id="filename">
+        Drag & drop a video here :)
+    </div>
+
+    <div id="playList">
+        <ul id="list">
+        </ul>
+    </div>
+    <img src="image/subtitles.svg" id="subFile"/>
+    <div id="subtitles-name">
+        <select id="subSelect" onchange="SelectData(this);">
+            <option value="nosubs">No Subtitles</option>
+        </select>
+    </div>
+    <div id="pop">
+        <span id="oops">
+            <h1>Oops :(</h1>
+            <br>
+            I can't find your Google Chromecast. It's on?<br>
+            <div id="tryagain">Ok, try again!</div>
+
+        </span>
+    </div>
+    <div id="status" class="status-loading">
+        <i id="chromecastIcon-big" class="fa fa-chrome fa-2x" aria-hidden="true"></i>
+        <div id="ChromecastDevice">
+            Searching chromecast
+        </div>
+    </div>
+    <div id="progressbar" class="w3-progress-container w3-light-blue">
+        <div id="progress" class="w3-progressbar w3-blue" style="width:0%"></div>
+    </div>
+    <div id="bar">
+        <span id="timeStart">0:00:00</span>
+        <div class="controlls center">
+            <img class="ctrl" id="backtoback" src="image/to-start.svg" id="open-config"/>
+            <img class="ctrl" id="back" src="image/fast-back.svg" id="open-config"/>
+            <img class="ctrl" id="play" src="image/play.svg" id="open-config"/>
+            <img class="ctrl" id="go" src="image/fast-forward.svg" id="open-config"/>
+            <img class="ctrl" id="gotogo" src="image/to-end.svg" id="open-config"/>
+        </div>
+        <span id="timeEnd">0:00:00</span>
+    </div>
+    <div id="holder" class="holder">
+    </div>
+
+    <img src="image/settings.svg" id="open-config"/>to-start.svg
+    <div id="config">
+        <div id="content-config">
+            <img id="close-config" src="image/close.svg" />
+            <h3 class="settings">Settings</h3>
+            <p id="subsConfigTitle">Subtitles Size</p>
+            <div id="subtitles-size">
+                <input id="subtitlesRange" type="range" min="0.1" max="6" step="0.1" oninput="ChangeSubtitlesSize(this.value)" onchange="SaveInConfig('subs', this.value)" />
+                <p id="x">x</p><input id="subtitleInput" type="text" readonly>
+            </div>
+
+            <br><br>
+
+            <p id="subcolorsP">Subtitles Color</p>
+            <div id="sub-white" color="#FFFFFF" onclick="ChangeSubtitlesColor(this)">
+                <img id="whiteCheck" class="colorset" src="image/check.svg">
+            </div>
+            
+            <div id="sub-yellow" color="#FFFF00" onclick="ChangeSubtitlesColor(this)">
+                <img id="yellowCheck" class="colorset" src="image/check.svg">
+            </div>
+
+            <p id="version"></p>
+            <p id="checkupdates">Check Updates</p>
+        </div>
+    </div>
+
+    <input id="load-subtitles" type="file" accept=".srt">
+</body>
+</html>

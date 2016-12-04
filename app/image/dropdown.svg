@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="8px" viewBox="0 0 12 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 39.1 (31720) - http://www.bohemiancoding.com/sketch -->
+    <title>Arrow</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Flow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="square">
+        <g id="Flow-Cast" transform="translate(-568.000000, -315.000000)" stroke="#FFFFFF" stroke-width="2">
+            <g id="App" transform="translate(420.000000, 260.000000)">
+                <g id="Arrow" transform="translate(149.000000, 56.000000)">
+                    <path d="M0.5,0.5 L4.74264069,4.74264069" id="Line"></path>
+                    <path d="M5.32842712,0.5 L9.57106781,4.74264069" id="Line" transform="translate(7.449747, 2.621320) scale(-1, 1) translate(-7.449747, -2.621320) "></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
