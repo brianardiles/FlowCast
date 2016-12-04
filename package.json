@@ -1,0 +1,33 @@
+{
+  "name": "FlowCast",
+  "main": "app/index.html",
+  "window": {
+    "toolbar": false,
+    "width": 618,
+    "height": 500,
+    "min_width": 600,
+    "min_height": 400,
+    "max_width": 600,
+    "max_height": 600,
+    "frame": false,
+    "transparent": true,
+    "icon": "app/image/flowcast.png",
+    "resizable": false
+  },
+  "developerMode": "false",
+  "dependencies": {
+    "adm-zip": "*",
+    "chromecast-js": "git+https://github.com/brai4u/chromecasts.git",
+    "encoding": "^0.1.12",
+    "file-exists": "*",
+    "is-online": "^5.1.2",
+    "jschardet": "^1.4.1",
+    "json-update": "^3.0.0",
+    "jsonfile": "^2.3.1",
+    "request": "*",
+    "srt2vtt": "*",
+    "universal-analytics": "^0.4.2"
+  },
+  "version": "0.2.2-2",
+  "autoupdate": "2.2-2"
+}
