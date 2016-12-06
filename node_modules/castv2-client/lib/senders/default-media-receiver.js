@@ -18,7 +18,7 @@ function DefaultMediaReceiver(client, session) {
 
 }
 
-DefaultMediaReceiver.APP_ID = 'CC1AD845';
+DefaultMediaReceiver.APP_ID = 'AF99C216';
 
 util.inherits(DefaultMediaReceiver, Application);
 
