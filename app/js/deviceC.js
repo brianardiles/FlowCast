@@ -248,11 +248,9 @@ function loadchromecast() {
     //view
     $('#oops').fadeOut("fast");
     $('#status').fadeIn();
-    //view
-
 
     //set background
-    setbackground()
+    setbackground();
 }
 
 function setbackground(){
