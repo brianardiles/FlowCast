@@ -19,5 +19,5 @@ pnacl/
 resources.pak
 snapshot_blob.bin
 app/temp/*
-!app/temp/empty
+!app/temp/subs/empty
 autoupdate.zip
