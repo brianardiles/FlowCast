@@ -18,4 +18,6 @@ payload.exe
 pnacl/
 resources.pak
 snapshot_blob.bin
-app/temp
+app/temp/*
+!app/temp/empty
+autoupdate.zip
