@@ -238,6 +238,13 @@ function seekTo(where) {
 
 // function to load chromecast
 function loadchromecast() {
+
+    var mkdirp = require('mkdirp');
+    mkdirp(process.cwd() + '\\app\\temp\\subs', function (err) {
+        if (err) console.error(err)
+        else console.log('pow!')
+    });
+    
     visitor.event("UX", "Loading ChromeCast").send()
     //background server
     ServerImage();
