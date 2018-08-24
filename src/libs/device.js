@@ -2,9 +2,19 @@
 const chromecasts = require('chromecasts');
 const server = require('./server');
 const subtitles = require('./subtitles');
+const config = require('../../config.json');
+
+// RC
+const rc = server.hostRC();
 
 let d = null;
-let deviceList = []
+let deviceList = [];
+let subStyle;
+let resume;
+let iosocket;
+
+let duration = 0;
+let currentTime = 0;
 
 /**
  * Search chromecasts in the LAN
@@ -14,8 +24,10 @@ let deviceList = []
  * @param io socket
  */
 const searchChromeCasts = (io) => {
+  iosocket = io;
   console.log('Searching chromecasts');
-  let listOfChromeCasts = chromecasts()
+  deviceList = [];
+  let listOfChromeCasts = chromecasts();
   listOfChromeCasts.on('update', (device) => {
     /**
      * The chromecast show double devices
@@ -23,43 +35,236 @@ const searchChromeCasts = (io) => {
      * the local device(s)
      */
     if (device.host.includes('local')) {
-      console.log({name: device.name, host: device.host})
-      io.emit('deviceFound', {name: device.name, host: device.host})
-      deviceList[device.host] = device
+      console.log({
+        name: device.name,
+        host: device.host
+      });
+      iosocket.emit('deviceFound', {
+        name: device.name,
+        host: device.host
+      });
+      deviceList[device.host] = device;
     }
-  })
-}
+  });
+};
 
 module.exports.searchChromeCasts = searchChromeCasts;
 
 /**
  * Select player by host
- * @param player
+ * @param string host
  */
 const selectDevice = (host) => {
   console.log('Devie selected: ', host);
   d = deviceList[host];
-  this.play('/Users/brian/Downloads/LIKE .mp4', 'like dislike', '/Users/brian/Downloads/prueba.srt')
-}
+  this.setBackground('./src/imgs/background.png');
+};
 
 module.exports.selectDevice = selectDevice;
 
 /**
- * Pass video + subs autohost
- * and play on the device
+ * Host the video and the subs in local
+ * to send the chromecasts streaming
+ * @param {string} videoPath the video path in the disk
+ * @param {string} title The title of the video
+ * @param {string} subsPath The path of the subs
  */
-const play = async (videoPath, title, subsPath) => {
-  console.log('playing', d)
-  const videoUrl = await server.hostFile(videoPath, 'video/mp4', 8559);
-  const subsPathVtt = subtitles.srtToVtt(subsPath)
-  const subtitleUrl = await server.hostFile(subsPathVtt, 'text/vtt', 8560);
+const play = async (videoPath, title, subsPath = false) => {
+  console.log('aver los subs', subsPath);
+  const videoUrl = await server.hostVideo(videoPath);
+  let subtitleUrl;
 
-  d.play(videoUrl,
-    {
+  if (subsPath) {
+    let subsPathVtt = subtitles.srtToVtt(subsPath);
+    subtitleUrl = await server.hostSubs(subsPathVtt);
+
+    // subconfig
+    subStyle = {
+      backgroundColor: '#FFFFFF00',
+      foregroundColor: config.subtitleColor,
+      edgeType: 'DROP_SHADOW',
+      edgeColor: '#00000073',
+      fontScale: config.subtitleSize,
+      fontStyle: 'NORMAL',
+      fontFamily: 'Helvetica',
+      fontGenericFamily: 'SANS_SERIF',
+      windowColor: 'NONE',
+      windowRoundedCornerRadius: 0,
+      windowType: 'NONE'
+    };
+
+    d.play(videoUrl, {
+      title: title,
+      type: 'video/mp4',
+      subtitles: [subtitleUrl],
+      autoSubtitles: true,
+      textTrackStyle: subStyle
+    });
+  } else {
+    d.play(videoUrl, {
       title: title,
       type: 'video/mp4'
-    }
-  )
-}
+    });
+  }
+  this.checkPlaying();
+  console.log('Playing', d, title);
+};
 
 module.exports.play = play;
+
+/**
+* Change subtitle color on the fly :D
+*/
+const changeSubColor = (color) => {
+  subStyle.foregroundColor = color;
+  console.log(subStyle);
+  d.changeSubtitlesColor(subStyle, function(err, status) {
+        console.log(status);
+    });
+
+  console.log('Color changed for: ', color);
+};
+
+module.exports.changeSubColor = changeSubColor;
+
+/**
+* Change subtitle size on the fly :D
+*/
+const changeSubSize = (size) => {
+  subStyle.fontScale = size;
+  console.log(subStyle);
+  d.changeSubtitlesSize(subStyle, function(err, status) {
+        console.log(status);
+    });
+
+  console.log('Size change for: ', size);
+};
+
+module.exports.changeSubSize = changeSubSize;
+
+/**
+* Set backgroud
+*/
+const setBackground = async (imgPath) => {
+  const imgUrl = await server.hostImage(imgPath);
+  d.play(imgUrl, {
+    type: 'image/png'
+  });
+
+  console.log('Background seted', d);
+};
+
+module.exports.setBackground = setBackground;
+
+/**
+* To start
+*/
+const toStart = async () => {
+  d.seek(0);
+
+  console.log('Going to start');
+};
+
+module.exports.toStart = toStart;
+
+/**
+* 30 seconds back
+*/
+const fastBack = async () => {
+  d.seek(currentTime - 30);
+
+  console.log('Fast back');
+};
+
+module.exports.fastBack = fastBack;
+
+/**
+* Pause
+*/
+const pauseBtn = async () => {
+  d.pause();
+  d.status((err, status) => {
+    console.log(status);
+  });
+
+  console.log('Pause');
+};
+
+module.exports.pauseBtn = pauseBtn;
+
+/**
+* Resume
+*/
+const resumeBtn = async () => {
+  d.resume();
+
+  console.log('Resume');
+};
+
+module.exports.resumeBtn = resumeBtn;
+
+/**
+* +30 seconds
+*/
+const fastForward = async () => {
+  d.seek(currentTime + 30);
+
+  console.log('Fast Forward');
+};
+
+module.exports.fastForward = fastForward;
+
+/**
+* To end
+*/
+const toEnd = async () => {
+  d.seek(duration);
+
+  console.log('Going to end');
+};
+
+module.exports.toEnd = toEnd;
+
+const checkPlaying = () => {
+  const refreshStatus = setInterval(() => {
+    d.status((err, status) => {
+      if (status) {
+        if (status.playerState !== 'PAUSED') {
+          duration = status.media.duration;
+          currentTime = status.currentTime;
+          percent = currentTime * 100 / duration;
+          iosocket.emit('playingStatus', {
+            duration: this.secondsToHHMMSS(duration).split('.')[0],
+            currentTime: this.secondsToHHMMSS(currentTime).split('.')[0],
+            percent: percent
+          });
+
+          console.log(duration, currentTime, percent);
+        }
+      } else {
+        this.resetControllers();
+        clearInterval(refreshStatus);
+      }
+    });
+  }, 1000);
+};
+
+module.exports.checkPlaying = checkPlaying;
+
+const secondsToHHMMSS = (s) => {
+    let h = Math.floor(s / 3600);
+    s -= h * 3600;
+    let m = Math.floor(s / 60);
+    s -= m * 60;
+
+    return h + ':' + (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
+};
+
+module.exports.secondsToHHMMSS = secondsToHHMMSS;
+
+const resetControllers = () => {
+  iosocket.emit('resetControllers');
+  this.setBackground('./src/imgs/background.png');
+};
+
+module.exports.resetControllers = resetControllers;
