@@ -2,7 +2,7 @@
 const chromecasts = require('chromecasts');
 const server = require('./server');
 const subtitles = require('./subtitles');
-const config = require('../../config.json');
+const configFile = require('../../config.json');
 
 // RC
 const rc = server.hostRC();
@@ -81,10 +81,10 @@ const play = async (videoPath, title, subsPath = false) => {
     // subconfig
     subStyle = {
       backgroundColor: '#FFFFFF00',
-      foregroundColor: config.subtitleColor,
+      foregroundColor: configFile.subtitleColor,
       edgeType: 'DROP_SHADOW',
       edgeColor: '#00000073',
-      fontScale: config.subtitleSize,
+      fontScale: configFile.subtitleSize,
       fontStyle: 'NORMAL',
       fontFamily: 'Helvetica',
       fontGenericFamily: 'SANS_SERIF',
@@ -112,15 +112,12 @@ const play = async (videoPath, title, subsPath = false) => {
 
 module.exports.play = play;
 
-/**
-* Change subtitle color on the fly :D
-*/
 const changeSubColor = (color) => {
   subStyle.foregroundColor = color;
   console.log(subStyle);
   d.changeSubtitlesColor(subStyle, function(err, status) {
-        console.log(status);
-    });
+    console.log(status);
+  });
 
   console.log('Color changed for: ', color);
 };
@@ -128,14 +125,15 @@ const changeSubColor = (color) => {
 module.exports.changeSubColor = changeSubColor;
 
 /**
-* Change subtitle size on the fly :D
-*/
+ * Change subtitle size on the fly :D
+ * @param {int} size size of the subtitles
+ */
 const changeSubSize = (size) => {
   subStyle.fontScale = size;
   console.log(subStyle);
   d.changeSubtitlesSize(subStyle, function(err, status) {
-        console.log(status);
-    });
+    console.log(status);
+  });
 
   console.log('Size change for: ', size);
 };
@@ -143,8 +141,9 @@ const changeSubSize = (size) => {
 module.exports.changeSubSize = changeSubSize;
 
 /**
-* Set backgroud
-*/
+ * Set backgroud
+ * @param {string} imgPath
+ */
 const setBackground = async (imgPath) => {
   const imgUrl = await server.hostImage(imgPath);
   d.play(imgUrl, {
@@ -157,8 +156,8 @@ const setBackground = async (imgPath) => {
 module.exports.setBackground = setBackground;
 
 /**
-* To start
-*/
+ * To start
+ */
 const toStart = async () => {
   d.seek(0);
 
@@ -168,8 +167,8 @@ const toStart = async () => {
 module.exports.toStart = toStart;
 
 /**
-* 30 seconds back
-*/
+ * 30 seconds back
+ */
 const fastBack = async () => {
   d.seek(currentTime - 30);
 
@@ -179,8 +178,8 @@ const fastBack = async () => {
 module.exports.fastBack = fastBack;
 
 /**
-* Pause
-*/
+ * Pause
+ */
 const pauseBtn = async () => {
   d.pause();
   d.status((err, status) => {
@@ -193,8 +192,8 @@ const pauseBtn = async () => {
 module.exports.pauseBtn = pauseBtn;
 
 /**
-* Resume
-*/
+ * Resume
+ */
 const resumeBtn = async () => {
   d.resume();
 
@@ -204,8 +203,8 @@ const resumeBtn = async () => {
 module.exports.resumeBtn = resumeBtn;
 
 /**
-* +30 seconds
-*/
+ * +30 seconds
+ */
 const fastForward = async () => {
   d.seek(currentTime + 30);
 
@@ -215,8 +214,8 @@ const fastForward = async () => {
 module.exports.fastForward = fastForward;
 
 /**
-* To end
-*/
+ * To end
+ */
 const toEnd = async () => {
   d.seek(duration);
 
@@ -232,7 +231,7 @@ const checkPlaying = () => {
         if (status.playerState !== 'PAUSED') {
           duration = status.media.duration;
           currentTime = status.currentTime;
-          percent = currentTime * 100 / duration;
+          percent = (currentTime * 100) / duration;
           iosocket.emit('playingStatus', {
             duration: this.secondsToHHMMSS(duration).split('.')[0],
             currentTime: this.secondsToHHMMSS(currentTime).split('.')[0],
@@ -252,12 +251,12 @@ const checkPlaying = () => {
 module.exports.checkPlaying = checkPlaying;
 
 const secondsToHHMMSS = (s) => {
-    let h = Math.floor(s / 3600);
-    s -= h * 3600;
-    let m = Math.floor(s / 60);
-    s -= m * 60;
+  let h = Math.floor(s / 3600);
+  s -= h * 3600;
+  let m = Math.floor(s / 60);
+  s -= m * 60;
 
-    return h + ':' + (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
+  return h + ':' + (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
 };
 
 module.exports.secondsToHHMMSS = secondsToHHMMSS;
