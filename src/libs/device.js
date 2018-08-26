@@ -32,9 +32,9 @@ const searchChromeCasts = (io) => {
     /**
      * The chromecast show double devices
      * one external and one intertal. For this case only need
-     * the local device(s)
+     * the external device(s)
      */
-    if (device.host.includes('local')) {
+    if (!device.host.includes('local')) {
       console.log({
         name: device.name,
         host: device.host
@@ -237,6 +237,7 @@ const checkPlaying = () => {
   const refreshStatus = setInterval(() => {
     d.status((err, status) => {
       if (status) {
+        console.log(status);
         if (status.playerState !== 'PAUSED') {
           duration = status.media.duration;
           currentTime = status.currentTime;

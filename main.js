@@ -10,7 +10,8 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 725,
     height: 628,
-    titleBarStyle: 'hidden',
+    titleBarStyle: 'hidden', // for macOs frameless
+    frame: false, // for windows frameless
     minWidth: 725,
     minHeight: 628
   });
