@@ -202,8 +202,8 @@ const showSettings = (selector) => {
 };
 
 $(() => {
-  $('input:file').change(() => {
-    const subsPath = $(this)[0].files[0].path;
+  $('input:file').change((e) => {
+    const subsPath = e.target.files[0].path;
     console.log(subsPath);
     if (subsPath.split('.').pop() == 'srt') {
       // $('#noti').html("subtitle added!");

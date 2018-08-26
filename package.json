@@ -15,10 +15,7 @@
       "category": "public.app-category.entertainment",
       "icon": "./src/imgs/flowcasticonbig.ico",
       "type": "distribution"
-    },
-    "extraFiles": [
-      "config.json"
-    ]
+    }
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "author": "GitHub",
@@ -33,6 +30,7 @@
   },
   "dependencies": {
     "chromecasts": "git+https://github.com/brianardiles/chromecasts.git",
+    "create-if-not-exist": "0.0.2",
     "express": "^4.16.3",
     "file-exists": "^5.0.1",
     "http-shutdown": "^1.2.0",

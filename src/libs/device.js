@@ -2,7 +2,8 @@
 const chromecasts = require('chromecasts');
 const server = require('./server');
 const subtitles = require('./subtitles');
-const configFile = require(`${process.cwd()}/config.json`);
+const APP_DATA_DIR = require('electron').remote.getGlobal('appData').dir;
+const configFile = require(`${APP_DATA_DIR}/config.json`);
 
 // RC
 const rc = server.hostRC();
@@ -70,7 +71,6 @@ module.exports.selectDevice = selectDevice;
  * @param {string} subsPath The path of the subs
  */
 const play = async (videoPath, title, subsPath = false) => {
-  console.log('aver los subs', subsPath);
   const videoUrl = await server.hostVideo(videoPath);
   let subtitleUrl;
 
