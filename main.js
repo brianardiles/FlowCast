@@ -13,7 +13,8 @@ function createWindow() {
     titleBarStyle: 'hidden', // for macOs frameless
     frame: false, // for windows frameless
     minWidth: 725,
-    minHeight: 628
+    minHeight: 628,
+    icon: './src/imgs/flowcast.ico'
   });
 
   // and load the index.html of the app.
