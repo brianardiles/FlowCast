@@ -83,32 +83,7 @@ const hostSubs = (subsPath) => {
 module.exports.hostSubs = hostSubs;
 
 /**
- * Host imgage file and return the url
- */
-const hostImage = (imgPath) => {
-  const hosting = http
-    .createServer(function(req, res) {
-      const stat = fs.statSync(imgPath);
-      const total = stat.size;
-      const file = fs.createReadStream(imgPath);
-      res.writeHead(206, {
-        'Content-Type': 'image/png',
-        'Access-Control-Allow-Origin': '*'
-      });
-      file.pipe(res);
-    })
-    .listen();
-
-  const server = `http://${ip}:${hosting.address().port}`;
-  console.log(`Server image listen: ${server}/`);
-
-  return server;
-};
-
-module.exports.hostImage = hostImage;
-
-/**
- * Host imgage file and return the url
+ * Host rc and return url
  */
 const hostRC = () => {
   const port = 8563;

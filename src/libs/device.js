@@ -58,7 +58,7 @@ module.exports.searchChromeCasts = searchChromeCasts;
 const selectDevice = (host) => {
   console.log('Devie selected: ', host);
   d = deviceList[host];
-  this.setBackground('./src/imgs/background.png');
+  this.setBackground();
 };
 
 module.exports.selectDevice = selectDevice;
@@ -142,10 +142,10 @@ module.exports.changeSubSize = changeSubSize;
 
 /**
  * Set backgroud
- * @param {string} imgPath
  */
-const setBackground = async (imgPath) => {
-  const imgUrl = await server.hostImage(imgPath);
+const setBackground = () => {
+  const imgUrl =
+    'https://cdn.rawgit.com/brianardiles/FlowCast/flowcast2/src/imgs/background.png';
   d.play(imgUrl, {
     type: 'image/png'
   });
@@ -272,7 +272,7 @@ module.exports.secondsToHHMMSS = secondsToHHMMSS;
 
 const resetControllers = () => {
   iosocket.emit('resetControllers');
-  this.setBackground('./src/imgs/background.png');
+  this.setBackground();
 };
 
 module.exports.resetControllers = resetControllers;
