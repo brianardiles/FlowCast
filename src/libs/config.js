@@ -1,6 +1,6 @@
 const updateJsonFile = require('update-json-file');
 const CONFIG_FILE = `${process.cwd()}/config.json`;
-const configFile = require(CONFIG_FILE);
+const configFile = window.require(CONFIG_FILE);
 
 const setSubtitlesCheck = () => {
   changeSubSize(configFile.subtitleSize);

@@ -1,24 +1,31 @@
 {
   "name": "FlowCast",
   "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "description": "Flow Cast",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "format": "prettier-eslint \"src/**/*.js\""
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "com.flowcast.cf",
+    "productName": "Flow Cast",
+    "mac": {
+      "category": "public.app-category.entertainment",
+      "icon": "./src/imgs/flowcasticonbig.ico",
+      "type": "distribution"
+    },
+    "extraFiles": [
+      "config.json"
+    ]
   },
   "repository": "https://github.com/electron/electron-quick-start",
-  "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
-  ],
   "author": "GitHub",
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "^2.0.0",
+    "electron-builder": "^20.28.2",
     "eslint": "^5.4.0",
     "eslint-config-google": "^0.9.1",
     "eslint-plugin-import": "^2.14.0",
