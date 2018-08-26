@@ -8,11 +8,11 @@ let mainWindow;
 function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 725,
+    height: 628,
     titleBarStyle: 'hidden',
-    minHeight: 800,
-    minWidth: 600
+    minWidth: 725,
+    minHeight: 628
   });
 
   // and load the index.html of the app.

@@ -65,4 +65,8 @@ io.on('connection', (socket) => {
   socket.on('to-end', () => {
     device.toEnd();
   });
+
+  socket.on('seekFromProgressBar', (percent) => {
+    device.seekFromProgressBar(percent);
+  });
 });

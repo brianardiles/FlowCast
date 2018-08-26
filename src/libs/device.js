@@ -158,7 +158,7 @@ module.exports.setBackground = setBackground;
 /**
  * To start
  */
-const toStart = async () => {
+const toStart = () => {
   d.seek(0);
 
   console.log('Going to start');
@@ -169,7 +169,7 @@ module.exports.toStart = toStart;
 /**
  * 30 seconds back
  */
-const fastBack = async () => {
+const fastBack = () => {
   d.seek(currentTime - 30);
 
   console.log('Fast back');
@@ -180,7 +180,7 @@ module.exports.fastBack = fastBack;
 /**
  * Pause
  */
-const pauseBtn = async () => {
+const pauseBtn = () => {
   d.pause();
   d.status((err, status) => {
     console.log(status);
@@ -194,7 +194,7 @@ module.exports.pauseBtn = pauseBtn;
 /**
  * Resume
  */
-const resumeBtn = async () => {
+const resumeBtn = () => {
   d.resume();
 
   console.log('Resume');
@@ -205,7 +205,7 @@ module.exports.resumeBtn = resumeBtn;
 /**
  * +30 seconds
  */
-const fastForward = async () => {
+const fastForward = () => {
   d.seek(currentTime + 30);
 
   console.log('Fast Forward');
@@ -216,13 +216,22 @@ module.exports.fastForward = fastForward;
 /**
  * To end
  */
-const toEnd = async () => {
+const toEnd = () => {
   d.seek(duration);
 
   console.log('Going to end');
 };
 
 module.exports.toEnd = toEnd;
+
+const seekFromProgressBar = (percent) => {
+  const seekTime = (percent * duration) / 100;
+  d.seek(seekTime);
+
+  console.log('seek from progress bar');
+};
+
+module.exports.seekFromProgressBar = seekFromProgressBar;
 
 const checkPlaying = () => {
   const refreshStatus = setInterval(() => {
@@ -237,11 +246,10 @@ const checkPlaying = () => {
             currentTime: this.secondsToHHMMSS(currentTime).split('.')[0],
             percent: percent
           });
-
-          console.log(duration, currentTime, percent);
         }
       } else {
         this.resetControllers();
+        this.checkIfNextVideoExists();
         clearInterval(refreshStatus);
       }
     });
@@ -267,3 +275,9 @@ const resetControllers = () => {
 };
 
 module.exports.resetControllers = resetControllers;
+
+const checkIfNextVideoExists = () => {
+  iosocket.emit('checkIfNextVideoExists');
+};
+
+module.exports.checkIfNextVideoExists = checkIfNextVideoExists;

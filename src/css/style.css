@@ -9,8 +9,11 @@ body {
     background: #000000;
     color: #FFFFFF;
     border: solid 1px #4A4A4A;
-    border-top: 0px;
     overflow: hidden;
+}
+
+.cont {
+    height: 99.6vh;
 }
 
 .row {
@@ -28,7 +31,8 @@ body {
     height: 8vh;
 }
 .playlist, .welcome {
-    height: 73.1vh;
+    height: 71.6vh;
+    width: 99.6vw;
     overflow: hidden;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -36,7 +40,6 @@ body {
 
 .welcome {
     position: absolute;
-    width: 100vw;
 }
 
 .welcome-content {
@@ -183,6 +186,7 @@ body {
     text-align: center;
     white-space: nowrap;
     background-color: #cfece6;
+    cursor: pointer;
 }
 
 .progress {
@@ -219,7 +223,7 @@ body {
     position: absolute;
     top: 3%;
     background: #000000;
-    width: 100vw;
+    width: 99.8vw;
     height: 82vh;
     display: none;
 }

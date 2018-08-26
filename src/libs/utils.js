@@ -24,13 +24,21 @@ socket.on('resetControllers', () => {
   $('.pause-btn').hide();
 });
 
+socket.on('checkIfNextVideoExists', () => {
+  const nextitem = $('li[playing=true]').next();
+  if (nextitem.is('li')) {
+    $(nextitem).dblclick();
+  }
+});
+
 const playVideo = (data) => {
   const videoPath = $(data).attr('path');
   const title = $(data).attr('title');
   const subsPath = $(data).attr('subs');
   let videoObjet = {videoPath: videoPath, title: title};
 
-  $('.list li').each(() => {
+  $('.list li').each(function() {
+    console.log(this);
     $(this).removeClass('active');
     $(this).attr('playing', 'false');
   });
@@ -235,3 +243,12 @@ const checkSubtitleIconStatus = () =>
         .css('opacity', '1');
     }
   });
+
+$(document).on('click', '.progress-bar', function(e) {
+  const percent = (e.pageX / $(this).width()) * 100;
+  $('.progress').animate({
+    width: percent + '%'
+  });
+
+  socket.emit('seekFromProgressBar', percent);
+});
