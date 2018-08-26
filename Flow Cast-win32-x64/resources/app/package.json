@@ -1,0 +1,42 @@
+{
+  "name": "FlowCast",
+  "version": "1.0.0",
+  "description": "Flow Cast",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "build"
+  },
+  "build": {
+    "appId": "com.getflowcast.cf",
+    "productName": "Flow Cast",
+    "directories": {
+      "output": "release"
+    },
+    "win": {
+      "target": "NSIS",
+      "icon": "build/icon.ico"
+    }
+  },
+  "repository": "https://github.com/electron/electron-quick-start",
+  "author": "Brian Ardiles",
+  "devDependencies": {
+    "electron": "^2.0.0",
+    "eslint": "^5.4.0",
+    "eslint-config-google": "^0.9.1",
+    "eslint-plugin-import": "^2.14.0",
+    "prettier-eslint-cli": "^4.7.1"
+  },
+  "dependencies": {
+    "chromecasts": "git+https://github.com/brianardiles/chromecasts.git",
+    "express": "^4.16.3",
+    "file-exists": "^5.0.1",
+    "http-shutdown": "^1.2.0",
+    "ip": "^1.1.5",
+    "jsonfile": "^4.0.0",
+    "listen-random-port": "^1.0.0",
+    "socket.io": "^2.1.1",
+    "srt2vtt": "^1.3.1",
+    "update-json-file": "^1.1.1"
+  }
+}

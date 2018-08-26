@@ -2,7 +2,7 @@
 const chromecasts = require('chromecasts');
 const server = require('./server');
 const subtitles = require('./subtitles');
-const configFile = require('../../config.json');
+const configFile = require(`${process.cwd()}/config.json`);
 
 // RC
 const rc = server.hostRC();

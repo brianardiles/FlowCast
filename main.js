@@ -11,7 +11,6 @@ function createWindow() {
     width: 725,
     height: 628,
     titleBarStyle: 'hidden', // for macOs frameless
-    frame: false, // for windows frameless
     minWidth: 725,
     minHeight: 628,
     icon: './src/imgs/flowcast.ico'

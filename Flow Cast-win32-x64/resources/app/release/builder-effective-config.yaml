@@ -1,0 +1,9 @@
+directories:
+  output: release
+  buildResources: build
+appId: com.getflowcast.cf
+productName: Flow Cast
+win:
+  target: NSIS
+  icon: build/icon.ico
+electronVersion: 2.0.0
