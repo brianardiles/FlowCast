@@ -1,4 +1,7 @@
 const config = require('./src/libs/config.js');
+const {clipboard} = require('electron');
+
+const torrentStream = require('torrent-stream');
 
 var socket = io.connect('http://localhost:3000');
 socket.on('deviceFound', (device) => {
@@ -214,6 +217,13 @@ $(() => {
   $('input[type="range"]').on('change mousemove', (e) => {
     setSubtitleRangeColor(e.target);
   });
+
+  $(document).keydown((e) => {
+    if ((e.ctrlKey || e.metaKey) && e.which === 86) {
+      const clipboardText = clipboard.readText();
+      getMagnetLink(clipboardText);
+    }
+  });
 });
 
 const setSubtitleRangeColor = (data) => {
@@ -252,3 +262,21 @@ $(document).on('click', '.progress-bar', function(e) {
 
   socket.emit('seekFromProgressBar', percent);
 });
+
+const getMagnetLink = (clipboardText) => {
+  if (clipboardText.includes('magnet:?')) {
+    let engine = torrentStream(clipboardText);
+
+    engine.on('ready', function() {
+      engine.files.forEach(function(file) {
+        console.log('filename:', file.name);
+        const stream = file.createReadStream();
+        console.log(stream);
+      });
+    });
+
+    engine.on('download', function(piece) {
+      console.log(piece);
+    });
+  }
+};
