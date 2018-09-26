@@ -1,4 +1,5 @@
 const config = require('./src/libs/config.js');
+const fileExists = require('file-exists');
 
 var socket = io.connect('http://localhost:3000');
 socket.on('deviceFound', (device) => {
@@ -99,7 +100,7 @@ const selecetChromeCast = (data) => {
   $('#chromeCastList').fadeOut('fast');
 };
 
-const addToPlayList = (fileName, filePath, subsPath) =>
+const addToPlayList = (fileName, filePath, subsPath) => {
   $('.list').append(`
       <li title='${fileName}'
         path='${filePath}'
@@ -112,6 +113,7 @@ const addToPlayList = (fileName, filePath, subsPath) =>
           <img class="close-icon" onclick="deleteFromPlayList(this)" src="./src/imgs/close.svg">
         </span>
         </li>`);
+};
 
 document.addEventListener('dragover', (event) => {
   event.preventDefault();
@@ -140,6 +142,12 @@ document.addEventListener('drop', (e) => {
       $('.welcome').removeClass('drop-style');
       $('.playlist').removeClass('drop-style');
       $('.welcome').fadeOut('fast');
+
+      // check if existis a subs with the same name
+      const subtitlePath = f.path.replace('.mp4', '.srt');
+      if (fileExists.sync(subtitlePath)) {
+        addsubtoplaylist(subtitlePath, fileName);
+      }
     }
   }
 });
@@ -191,8 +199,25 @@ const addActive = (data) => {
   $(data).addClass('active');
 };
 
-const addsubtoplaylist = (subsPath) => {
-  $('.active').attr('subs', subsPath);
+/**
+ * Add sub to file in playlist
+ * @param {string} subsPath the full path
+ * @param {string} videoTitle the title of the video
+ */
+const addsubtoplaylist = (subsPath, videoTitle = null) => {
+  const active = $('.active');
+  console.log('el sub esta ', subsPath);
+  /** if an active video is in the playlist
+  set the subtitles, if not set the subtitles
+  to the video with the same name*/
+  if (active.length) {
+    console.log('active ', active);
+    active.attr('subs', subsPath);
+  } else {
+    $(`li[title='${videoTitle}']`).attr('subs', subsPath);
+    console.log($(`li[title='${videoTitle}']`));
+  }
+
   checkSubtitleIconStatus();
 };
 
