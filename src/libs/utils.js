@@ -229,7 +229,7 @@ const addsubtoplaylist = (subsPath, videoTitle = null) => {
   }
 
   checkSubtitleIconStatus();
-  resumeIfIsNecesary(videoTitle);
+  resumeIfIsNecesary();
 };
 
 const showSettings = (selector) => {
@@ -281,12 +281,11 @@ const checkSubtitleIconStatus = () =>
   });
 
 /**
- * Check if the sub added belong to a video playing
+ * Check if the sub added belong to a video active
  * if is true, update the subs and resume video
  * to the correct time
- * @param {stirng} videoTitle
  */
-const resumeIfIsNecesary = (videoTitle) => {
+const resumeIfIsNecesary = () => {
   const selected = $('.active');
   const playing = selected.attr('playing');
   const newSubs = selected.attr('subs');

@@ -73,7 +73,6 @@ module.exports.selectDevice = selectDevice;
 const play = async (videoPath, title, subsPath = false, timeInSecods = 0) => {
   const videoUrl = await server.hostVideo(videoPath);
   let subtitleUrl;
-  videoTitle = title;
 
   if (subsPath) {
     let subsPathVtt = subtitles.srtToVtt(subsPath);
