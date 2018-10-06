@@ -21,8 +21,8 @@
       "icon": "build/icon.ico"
     }
   },
-  "repository": "https://github.com/electron/electron-quick-start",
-  "author": "GitHub",
+  "repository": "https://github.com/brianardiles/FlowCast",
+  "author": "Brian Ardiles",
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "^2.0.0",
