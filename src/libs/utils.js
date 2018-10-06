@@ -1,7 +1,7 @@
 const config = require('./src/libs/config.js');
 const fileExists = require('file-exists');
 
-var socket = io.connect('http://localhost:3000');
+let socket = io.connect('http://localhost:3000');
 socket.on('deviceFound', (device) => {
   console.log('device found:', device.name);
   $('.avaliables-chromecasts').append(
@@ -39,7 +39,6 @@ const playVideo = (data) => {
   let videoObjet = {videoPath: videoPath, title: title};
 
   $('.list li').each(function() {
-    console.log(this);
     $(this).removeClass('active');
     $(this).attr('playing', 'false');
   });
@@ -213,12 +212,11 @@ const addsubtoplaylist = (subsPath, videoTitle = null) => {
   if (active.length) {
     console.log('active ', active);
     active.attr('subs', subsPath);
+    checkSubtitleIconStatus();
   } else {
     $(`li[title='${videoTitle}']`).attr('subs', subsPath);
-    console.log($(`li[title='${videoTitle}']`));
+    checkSubtitleIconStatus();
   }
-
-  checkSubtitleIconStatus();
 };
 
 const showSettings = (selector) => {
@@ -259,9 +257,9 @@ const setSubtitleRangeColor = (data) => {
 };
 
 const checkSubtitleIconStatus = () =>
-  $('.list li').each(() => {
+  $('.list li').each((index, value) => {
     if ($(this).attr('subs') !== 'false') {
-      $(this)
+      $(value)
         .children()
         .children()
         .children()
