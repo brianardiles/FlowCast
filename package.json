@@ -15,6 +15,10 @@
       "category": "public.app-category.entertainment",
       "icon": "./src/imgs/flowcasticonbig.ico",
       "type": "distribution"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico"
     }
   },
   "repository": "https://github.com/electron/electron-quick-start",
