@@ -1,6 +1,9 @@
 const config = require('./src/libs/config.js');
 const fileExists = require('file-exists');
 
+let timeInSecods = 0;
+let videoObjet = {};
+
 let socket = io.connect('http://localhost:3000');
 socket.on('deviceFound', (device) => {
   console.log('device found:', device.name);
@@ -12,6 +15,7 @@ socket.on('deviceFound', (device) => {
 });
 
 socket.on('playingStatus', (data) => {
+  timeInSecods = data.timeInSecods;
   $('.current-time').html(data.currentTime);
   $('.total-time').html(data.duration);
   $('.progress').css('width', `${data.percent.toFixed(2)}%`);
@@ -36,7 +40,10 @@ const playVideo = (data) => {
   const videoPath = $(data).attr('path');
   const title = $(data).attr('title');
   const subsPath = $(data).attr('subs');
-  let videoObjet = {videoPath: videoPath, title: title};
+  videoObjet.videoPath = videoPath;
+  videoObjet.title = title;
+  videoObjet.subsPath = false;
+  videoObjet.timeInSecods = 0;
 
   $('.list li').each(function() {
     $(this).removeClass('active');
@@ -135,20 +142,26 @@ document.addEventListener('drop', (e) => {
       .pop()
       .split('/')
       .pop();
-    if (fileExt === 'mp4') {
+    const subtitlePath = f.path.replace('.mp4', '.srt');
+    // check if the file is mp4 or mvk to add in the playlist
+    if (fileExt === 'mp4' || fileExt === 'mkv') {
       console.log('File(s) dragged:', f.path);
       addToPlayList(fileName, f.path, false);
-      $('.welcome').removeClass('drop-style');
-      $('.playlist').removeClass('drop-style');
       $('.welcome').fadeOut('fast');
 
       // check if existis a subs with the same name
-      const subtitlePath = f.path.replace('.mp4', '.srt');
       if (fileExists.sync(subtitlePath)) {
         addsubtoplaylist(subtitlePath, fileName);
       }
+    } else if (fileExt === 'srt') {
+      // if the file is .srt try to add in a video with
+      // the same name
+      addsubtoplaylist(subtitlePath, fileName);
     }
   }
+
+  $('.welcome').removeClass('drop-style');
+  $('.playlist').removeClass('drop-style');
 });
 
 const callCtlAction = (data) => {
@@ -205,18 +218,18 @@ const addActive = (data) => {
  */
 const addsubtoplaylist = (subsPath, videoTitle = null) => {
   const active = $('.active');
-  console.log('el sub esta ', subsPath);
   /** if an active video is in the playlist
   set the subtitles, if not set the subtitles
   to the video with the same name*/
   if (active.length) {
     console.log('active ', active);
     active.attr('subs', subsPath);
-    checkSubtitleIconStatus();
   } else {
     $(`li[title='${videoTitle}']`).attr('subs', subsPath);
-    checkSubtitleIconStatus();
   }
+
+  checkSubtitleIconStatus();
+  resumeIfIsNecesary(videoTitle);
 };
 
 const showSettings = (selector) => {
@@ -266,6 +279,25 @@ const checkSubtitleIconStatus = () =>
         .css('opacity', '1');
     }
   });
+
+/**
+ * Check if the sub added belong to a video playing
+ * if is true, update the subs and resume video
+ * to the correct time
+ * @param {stirng} videoTitle
+ */
+const resumeIfIsNecesary = (videoTitle) => {
+  const selected = $('.active');
+  const playing = selected.attr('playing');
+  const newSubs = selected.attr('subs');
+
+  if (playing) {
+    // add time in seconds to video obj to resume
+    videoObjet.timeInSecods = timeInSecods;
+    videoObjet.subsPath = newSubs;
+    socket.emit('play', videoObjet);
+  }
+};
 
 $(document).on('click', '.progress-bar', function(e) {
   const percent = (e.pageX / $(this).width()) * 100;

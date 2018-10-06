@@ -31,7 +31,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('play', (data) => {
-    device.play(data.videoPath, data.title, data.subsPath);
+    device.play(data.videoPath, data.title, data.subsPath, data.timeInSecods);
   });
 
   socket.on('changeSubColor', (color) => {
