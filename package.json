@@ -6,7 +6,7 @@
   "scripts": {
     "start": "electron .",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder"
+    "dist": "electron-builder --publish always"
   },
   "build": {
     "appId": "com.flowcast.cf",
@@ -14,7 +14,10 @@
     "mac": {
       "category": "public.app-category.entertainment",
       "icon": "./src/imgs/flowcasticonbig.ico",
-      "type": "distribution"
+      "type": "distribution",
+      "publish": [
+        "github"
+      ]
     },
     "win": {
       "target": "nsis",
