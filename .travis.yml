@@ -4,7 +4,6 @@ node_js:
   - 10
 os:
   - osx
-  - win
 addons:
   apt:
     packages:
