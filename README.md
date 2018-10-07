@@ -1,45 +1,70 @@
-# electron-quick-start
+# FlowCast - Beta
 
-**Clone and run for a quick way to see Electron in action.**
+**FlowCast** is the easiest and cute way to send content to your Chromecast. Developer [@brai4u](https://twitter.com/brai4u)
 
-This is a minimal Electron application based on the [Quick Start Guide](https://electronjs.org/docs/tutorial/quick-start) within the Electron documentation.
+![FlowCast](https://i.imgur.com/ICtCZwW.png)
+v1.0.3
 
-**Use this app along with the [Electron API Demos](https://electronjs.org/#get-started) app for API code examples to help you get started.**
+# Features
 
-A basic Electron application needs just these files:
+* Cast mp4 video / mvk container
+* Easy way to add subtitles
+* Autoload subtitles whith the same name of video
+* AutoUpdate system
+* Customizable subtitles
+* Playlist
 
-- `package.json` - Points to the app's main file and lists its details and dependencies.
-- `main.js` - Starts the app and creates a browser window to render HTML. This is the app's **main process**.
-- `index.html` - A web page to render. This is the app's **renderer process**.
+# Getting Started
 
-You can learn more about each of these components within the [Quick Start Guide](https://electronjs.org/docs/tutorial/quick-start).
+Download Flow Cast from (https://getflowcast.cf)
 
-## To Use
+#TO-DO List
+* ~~Playlist~~
 
-To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
+#Changelog
 
-```bash
-# Clone this repository
-git clone https://github.com/electron/electron-quick-start
-# Go into the repository
-cd electron-quick-start
-# Install dependencies
-npm install
-# Run the app
-npm start
-```
+Changelog: 07/10/2018
+* Rebuild all the app in electron
+* Add suport to OSX
+* Add a real autoupdate with electron
 
-Note: If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `node` from the command prompt.
+Changelog: 02/09/2016
 
-## Resources for Learning Electron
+* New design
+* Fix: Controlls position
+* Fix: More fast check icon for subtitles color
+* Fix: Settings border
+* Fix: Notification position and color
+* Fix: Msg use notification
 
-- [electronjs.org/docs](https://electronjs.org/docs) - all of Electron's documentation
-- [electronjs.org/community#boilerplates](https://electronjs.org/community#boilerplates) - sample starter apps created by the community
-- [electron/electron-quick-start](https://github.com/electron/electron-quick-start) - a very basic starter Electron app
-- [electron/simple-samples](https://github.com/electron/simple-samples) - small applications with ideas for taking them further
-- [electron/electron-api-demos](https://github.com/electron/electron-api-demos) - an Electron app that teaches you how to use Electron
-- [hokein/electron-sample-apps](https://github.com/hokein/electron-sample-apps) - small demo apps for the various Electron APIs
+Changelog 25/03/2016
+* Add setting menu
+* Add change subtitles color on the fly
+* Add change subtitles size on the fly
+* Add config file to save changes
+* Fix sortable list
+* Fix update request
+* Add manual check for updates
+* Add control for status bar
+* Add pause / play with the space bar
 
-## License
+Changelog 24/08/2016:
+* Allow sortable playlist items
 
-[CC0 1.0 (Public Domain)](LICENSE.md)
+Changelog 23/08/2016:
+* Text no selected
+* Add playlist
+* Automatic play from playlist
+* Allow add multiple videos at playlist
+* Allow remove videos from playlist
+* Dedicate folder to subtitles files
+* Fix drop area
+* Fix overflow playlist area
+* add custom scrollbar
+* Fix load repeat files
+* Fix next button
+* Fix chromecast area
+* More accurate text of status
+* Add +30segs / - 30segs 
+* Fix name of video on chromecast when reload subtitles
+* Clear temp subs folder when closed
