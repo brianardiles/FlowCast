@@ -18,10 +18,10 @@ v1.0.3
 
 Download Flow Cast from (https://getflowcast.cf)
 
-#TO-DO List
+# TO-DO List
 * ~~Playlist~~
 
-#Changelog
+# Changelog
 
 Changelog: 07/10/2018
 * Rebuild all the app in electron
