@@ -1,9 +1,11 @@
 const config = require('./src/libs/config.js');
 const {clipboard} = require('electron');
+const fileExists = require('file-exists');
 
-const torrentStream = require('torrent-stream');
+let timeInSecods = 0;
+let videoObjet = {};
 
-var socket = io.connect('http://localhost:3000');
+let socket = io.connect('http://localhost:3000');
 socket.on('deviceFound', (device) => {
   console.log('device found:', device.name);
   $('.avaliables-chromecasts').append(
@@ -14,6 +16,7 @@ socket.on('deviceFound', (device) => {
 });
 
 socket.on('playingStatus', (data) => {
+  timeInSecods = data.timeInSecods;
   $('.current-time').html(data.currentTime);
   $('.total-time').html(data.duration);
   $('.progress').css('width', `${data.percent.toFixed(2)}%`);
@@ -38,10 +41,12 @@ const playVideo = (data) => {
   const videoPath = $(data).attr('path');
   const title = $(data).attr('title');
   const subsPath = $(data).attr('subs');
-  let videoObjet = {videoPath: videoPath, title: title};
+  videoObjet.videoPath = videoPath;
+  videoObjet.title = title;
+  videoObjet.subsPath = false;
+  videoObjet.timeInSecods = 0;
 
   $('.list li').each(function() {
-    console.log(this);
     $(this).removeClass('active');
     $(this).attr('playing', 'false');
   });
@@ -102,7 +107,7 @@ const selecetChromeCast = (data) => {
   $('#chromeCastList').fadeOut('fast');
 };
 
-const addToPlayList = (fileName, filePath, subsPath) =>
+const addToPlayList = (fileName, filePath, subsPath) => {
   $('.list').append(`
       <li title='${fileName}'
         path='${filePath}'
@@ -115,6 +120,7 @@ const addToPlayList = (fileName, filePath, subsPath) =>
           <img class="close-icon" onclick="deleteFromPlayList(this)" src="./src/imgs/close.svg">
         </span>
         </li>`);
+};
 
 document.addEventListener('dragover', (event) => {
   event.preventDefault();
@@ -137,14 +143,26 @@ document.addEventListener('drop', (e) => {
       .pop()
       .split('/')
       .pop();
-    if (fileExt === 'mp4') {
+    const subtitlePath = f.path.replace('.mp4', '.srt');
+    // check if the file is mp4 or mvk to add in the playlist
+    if (fileExt === 'mp4' || fileExt === 'mkv') {
       console.log('File(s) dragged:', f.path);
       addToPlayList(fileName, f.path, false);
-      $('.welcome').removeClass('drop-style');
-      $('.playlist').removeClass('drop-style');
       $('.welcome').fadeOut('fast');
+
+      // check if existis a subs with the same name
+      if (fileExists.sync(subtitlePath)) {
+        addsubtoplaylist(subtitlePath, fileName);
+      }
+    } else if (fileExt === 'srt') {
+      // if the file is .srt try to add in a video with
+      // the same name
+      addsubtoplaylist(subtitlePath, fileName);
     }
   }
+
+  $('.welcome').removeClass('drop-style');
+  $('.playlist').removeClass('drop-style');
 });
 
 const callCtlAction = (data) => {
@@ -194,9 +212,25 @@ const addActive = (data) => {
   $(data).addClass('active');
 };
 
-const addsubtoplaylist = (subsPath) => {
-  $('.active').attr('subs', subsPath);
+/**
+ * Add sub to file in playlist
+ * @param {string} subsPath the full path
+ * @param {string} videoTitle the title of the video
+ */
+const addsubtoplaylist = (subsPath, videoTitle = null) => {
+  const active = $('.active');
+  /** if an active video is in the playlist
+  set the subtitles, if not set the subtitles
+  to the video with the same name*/
+  if (active.length) {
+    console.log('active ', active);
+    active.attr('subs', subsPath);
+  } else {
+    $(`li[title='${videoTitle}']`).attr('subs', subsPath);
+  }
+
   checkSubtitleIconStatus();
+  resumeIfIsNecesary();
 };
 
 const showSettings = (selector) => {
@@ -244,15 +278,33 @@ const setSubtitleRangeColor = (data) => {
 };
 
 const checkSubtitleIconStatus = () =>
-  $('.list li').each(() => {
+  $('.list li').each((index, value) => {
     if ($(this).attr('subs') !== 'false') {
-      $(this)
+      $(value)
         .children()
         .children()
         .children()
         .css('opacity', '1');
     }
   });
+
+/**
+ * Check if the sub added belong to a video active
+ * if is true, update the subs and resume video
+ * to the correct time
+ */
+const resumeIfIsNecesary = () => {
+  const selected = $('.active');
+  const playing = selected.attr('playing');
+  const newSubs = selected.attr('subs');
+
+  if (playing) {
+    // add time in seconds to video obj to resume
+    videoObjet.timeInSecods = timeInSecods;
+    videoObjet.subsPath = newSubs;
+    socket.emit('play', videoObjet);
+  }
+};
 
 $(document).on('click', '.progress-bar', function(e) {
   const percent = (e.pageX / $(this).width()) * 100;

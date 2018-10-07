@@ -70,7 +70,7 @@ module.exports.selectDevice = selectDevice;
  * @param {string} title The title of the video
  * @param {string} subsPath The path of the subs
  */
-const play = async (videoPath, title, subsPath = false) => {
+const play = async (videoPath, title, subsPath = false, timeInSecods = 0) => {
   const videoUrl = await server.hostVideo(videoPath);
   let subtitleUrl;
 
@@ -98,7 +98,8 @@ const play = async (videoPath, title, subsPath = false) => {
       type: 'video/mp4',
       subtitles: [subtitleUrl],
       autoSubtitles: true,
-      textTrackStyle: subStyle
+      textTrackStyle: subStyle,
+      seek: timeInSecods
     });
   } else {
     d.play(videoUrl, {
@@ -245,7 +246,8 @@ const checkPlaying = () => {
           iosocket.emit('playingStatus', {
             duration: this.secondsToHHMMSS(duration).split('.')[0],
             currentTime: this.secondsToHHMMSS(currentTime).split('.')[0],
-            percent: percent
+            percent: percent,
+            timeInSecods: status.currentTime
           });
         }
       } else {
