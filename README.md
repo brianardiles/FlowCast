@@ -1,3 +1,4 @@
+![FlowCastStatus](https://travis-ci.org/brianardiles/FlowCast.svg?branch=master)
 # FlowCast - Beta
 
 **FlowCast** is the easiest and cute way to send content to your Chromecast. Developer [@brai4u](https://twitter.com/brai4u)
