@@ -6,14 +6,15 @@
   "scripts": {
     "start": "electron .",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder --publish always"
+    "dist": "electron-builder --publish always",
+    "distLocal": "electron-builder"
   },
   "build": {
     "appId": "com.flowcast.cf",
     "productName": "Flow Cast",
     "mac": {
       "category": "public.app-category.entertainment",
-      "icon": "./src/imgs/flowcasticonbig.ico",
+      "icon": "./src/imgs/flowcastIconMac.png",
       "type": "distribution",
       "publish": [
         "github"

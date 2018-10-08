@@ -141,6 +141,13 @@ body {
     top: 0;
 }
 
+.version {
+    margin-right: 28px;
+    color: #444;
+    font-size: 15px;
+    text-align: right;
+}
+
 .button-close {
     border: none;
     display: inline-block;

@@ -1,4 +1,5 @@
 const config = require('./src/libs/config.js');
+const packageJson = require('./package.json');
 const fileExists = require('file-exists');
 
 let timeInSecods = 0;
@@ -235,6 +236,7 @@ const addsubtoplaylist = (subsPath, videoTitle = null) => {
 const showSettings = (selector) => {
   $(selector).fadeIn('fast');
   config.setSubtitlesCheck();
+  $('.version').html(`version: ${packageJson.version}`);
 };
 
 $(() => {
