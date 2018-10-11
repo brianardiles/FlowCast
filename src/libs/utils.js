@@ -120,6 +120,7 @@ const addToPlayList = (fileName, filePath, subsPath) => {
           <img class="close-icon" onclick="deleteFromPlayList(this)" src="./src/imgs/close.svg">
         </span>
         </li>`);
+  showNotification(`${fileName} added to the playlist`);
 };
 
 document.addEventListener('dragover', (event) => {
@@ -229,7 +230,7 @@ const addsubtoplaylist = (subsPath, videoTitle = null) => {
   } else {
     $(`li[title='${videoTitle}']`).attr('subs', subsPath);
   }
-  
+
   checkSubtitleIconStatus();
   resumeIfIsNecesary();
   showNotification(`Subtitles added to: ${videoTitle}`);
