@@ -1,6 +1,8 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow} = require('electron');
 
+app.setAppUserModelId('com.flowcast');
+
 // call autoupdater
 const {autoUpdater} = require('electron-updater');
 autoUpdater.checkForUpdatesAndNotify();

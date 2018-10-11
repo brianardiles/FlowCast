@@ -99,6 +99,18 @@ body {
     justify-content: center;
 }
 
+.notification {
+    background-color: #50E3C2;
+    margin-right: 19px;
+    position: absolute;
+    right: 0px;
+    padding: 12px;
+    border-radius: 3px;
+    color: black;
+    display: none;
+    z-index: 99;
+}
+
 .ctrl-img {
     margin: 10px;
     cursor: pointer;
