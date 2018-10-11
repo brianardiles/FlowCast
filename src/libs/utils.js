@@ -225,12 +225,14 @@ const addsubtoplaylist = (subsPath, videoTitle = null) => {
   if (active.length) {
     console.log('active ', active);
     active.attr('subs', subsPath);
+    videoTitle = active.attr('title');
   } else {
     $(`li[title='${videoTitle}']`).attr('subs', subsPath);
   }
-
+  
   checkSubtitleIconStatus();
   resumeIfIsNecesary();
+  showNotification(`Subtitles added to: ${videoTitle}`);
 };
 
 const showSettings = (selector) => {
@@ -308,3 +310,11 @@ $(document).on('click', '.progress-bar', function(e) {
 
   socket.emit('seekFromProgressBar', percent);
 });
+
+const showNotification = (text) => {
+  $('.notification').html(text);
+  $('.notification')
+    .fadeIn()
+    .delay(2000)
+    .fadeOut();
+};
