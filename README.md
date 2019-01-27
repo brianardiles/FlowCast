@@ -24,6 +24,10 @@ Download Flow Cast from (https://getflowcast.cf)
 
 # Changelog
 
+Changelog: 27/01/2019
+* Add shortcuts (left -30 seg, right +30 seg, crtl or cmd + left go to start, crtl or cmd + right go to end, space pause/resume)
+* Add block sleep system to avoid stop casting (allow screen off)
+
 Changelog: 07/10/2018
 * Rebuild all the app in electron
 * Add suport to OSX
