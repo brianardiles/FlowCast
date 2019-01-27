@@ -4,6 +4,7 @@ const server = require('./server');
 const subtitles = require('./subtitles');
 const APP_DATA_DIR = require('electron').remote.getGlobal('appData').dir;
 const configFile = require(`${APP_DATA_DIR}/config.json`);
+const util = require('util');
 
 // RC
 const rc = server.hostRC();
@@ -11,7 +12,6 @@ const rc = server.hostRC();
 let d = null;
 let deviceList = [];
 let subStyle;
-let resume;
 let iosocket;
 
 let duration = 0;
@@ -184,9 +184,14 @@ module.exports.fastBack = fastBack;
 const pauseBtn = () => {
   d.pause();
   d.status((err, status) => {
+    if (err) {
+      console.log('Error: ', err);
+    }
     console.log(status);
   });
 
+  $('.play-btn').show();
+  $('.pause-btn').hide();
   console.log('Pause');
 };
 
@@ -197,8 +202,16 @@ module.exports.pauseBtn = pauseBtn;
  */
 const resumeBtn = () => {
   d.resume();
+  d.status((err, status) => {
+    if (err) {
+      console.log('Error: ', err);
+    }
+    console.log(status);
+  });
 
   console.log('Resume');
+  $('.pause-btn').show();
+  $('.play-btn').hide();
 };
 
 module.exports.resumeBtn = resumeBtn;
@@ -238,7 +251,6 @@ const checkPlaying = () => {
   const refreshStatus = setInterval(() => {
     d.status((err, status) => {
       if (status) {
-        console.log(status);
         if (status.playerState !== 'PAUSED') {
           duration = status.media.duration;
           currentTime = status.currentTime;
@@ -260,6 +272,15 @@ const checkPlaying = () => {
 };
 
 module.exports.checkPlaying = checkPlaying;
+
+const getPlayerStatus = async () => {
+  const statusAsync = util.promisify(d.status);
+  const status = await statusAsync();
+
+  return status;
+};
+
+module.exports.getPlayerStatus = getPlayerStatus;
 
 const secondsToHHMMSS = (s) => {
   let h = Math.floor(s / 3600);

@@ -168,13 +168,6 @@ document.addEventListener('drop', (e) => {
 
 const callCtlAction = (data) => {
   const action = $(data).attr('action');
-  if (action === 'play-btn') {
-    $(data).hide();
-    $('.pause-btn').show();
-  } else if (action === 'pause-btn') {
-    $(data).hide();
-    $('.play-btn').show();
-  }
 
   socket.emit(action);
 };
