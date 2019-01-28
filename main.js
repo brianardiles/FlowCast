@@ -1,7 +1,8 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow, powerSaveBlocker} = require('electron');
 
-app.setAppUserModelId('com.flowcast');
+app.setAppUserModelId('Brianardiles.FlowCast');
+app.setAsDefaultProtocolClient('ba-flowcast');
 
 // call autoupdater
 const {autoUpdater} = require('electron-updater');
