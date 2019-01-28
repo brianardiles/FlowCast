@@ -1,12 +1,9 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow, powerSaveBlocker} = require('electron');
+const {app, BrowserWindow, powerSaveBlocker, dialog} = require('electron');
+const {autoUpdater} = require('electron-updater');
 
 app.setAppUserModelId('Brianardiles.FlowCast');
 app.setAsDefaultProtocolClient('ba-flowcast');
-
-// call autoupdater
-const {autoUpdater} = require('electron-updater');
-autoUpdater.checkForUpdatesAndNotify();
 
 // prevent computer sleep
 const id = powerSaveBlocker.start('prevent-app-suspension');
@@ -39,6 +36,52 @@ function createWindow() {
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
     mainWindow = null;
+  });
+
+  // call autoupdater
+  autoUpdater.autoDownload = false;
+  autoUpdater.autoInstallOnAppQuit = false;
+
+  setTimeout(function() {
+    autoUpdater.checkForUpdates();
+  }, 6000);
+
+  autoUpdater.on('update-available', () => {
+    console.log('update is available');
+
+    const options = {
+      type: 'question',
+      buttons: ['No, Later', 'Yes, please'],
+      defaultId: 2,
+      title: 'Question',
+      message: 'Do you want update FlowCast?',
+      detail: 'A new version is available'
+    };
+
+    dialog.showMessageBox(null, options, (response) => {
+      if (response == 1) {
+        console.log('update accepted');
+        autoUpdater.downloadUpdate();
+      }
+    });
+  });
+
+  autoUpdater.on('update-downloaded', () => {
+    const options = {
+      type: 'question',
+      buttons: ['No, Later', 'Yes, restart and install'],
+      defaultId: 2,
+      title: 'Question',
+      message: 'Do you want install the FlowCast update?',
+      detail: 'A new version wos be updated if you accept'
+    };
+
+    dialog.showMessageBox(null, options, (response) => {
+      if (response == 1) {
+        console.log('install accepted');
+        autoUpdater.quitAndInstall();
+      }
+    });
   });
 }
 
