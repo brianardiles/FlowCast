@@ -39,7 +39,7 @@ function createWindow() {
   });
 
   // call autoupdater
-  autoUpdater.autoDownload = false;
+  autoUpdater.autoDownload = true;
   autoUpdater.autoInstallOnAppQuit = false;
 
   setTimeout(function() {
@@ -48,28 +48,12 @@ function createWindow() {
 
   autoUpdater.on('update-available', () => {
     console.log('update is available');
-
-    const options = {
-      type: 'question',
-      buttons: ['No, Later', 'Yes, please'],
-      defaultId: 2,
-      title: 'Question',
-      message: 'Do you want update FlowCast?',
-      detail: 'A new version is available'
-    };
-
-    dialog.showMessageBox(null, options, (response) => {
-      if (response == 1) {
-        console.log('update accepted');
-        autoUpdater.downloadUpdate();
-      }
-    });
   });
 
   autoUpdater.on('update-downloaded', () => {
     const options = {
       type: 'question',
-      buttons: ['No, Later', 'Yes, restart and install'],
+      buttons: ['No, Later', 'Yes, Install'],
       defaultId: 2,
       title: 'Question',
       message: 'Do you want install the FlowCast update?',

@@ -8,6 +8,8 @@ let videoObjet = {};
 let socket = io.connect('http://localhost:3000');
 socket.on('deviceFound', (device) => {
   console.log('device found:', device.name);
+  $('.modal-cc-title').html('Select a ChromeCast');
+  $('.loading-container').hide();
   $('.avaliables-chromecasts').append(
     `<li onclick='selecetChromeCast(this)' device='${JSON.stringify(device)}'>${
       device.name

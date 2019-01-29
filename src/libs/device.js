@@ -25,6 +25,8 @@ let currentTime = 0;
  * @param io socket
  */
 const searchChromeCasts = (io) => {
+  $('.modal-cc-title').html('Searching ChromeCasts...');
+  $('.loading-container').fadeIn('fast');
   iosocket = io;
   console.log('Searching chromecasts');
   deviceList = [];
@@ -146,7 +148,7 @@ module.exports.changeSubSize = changeSubSize;
  */
 const setBackground = () => {
   const imgUrl =
-    'https://cdn.rawgit.com/brianardiles/FlowCast/flowcast2/src/imgs/background.png';
+    'https://raw.githubusercontent.com/brianardiles/FlowCast/master/src/imgs/background.png';
   d.play(imgUrl, {
     type: 'image/png'
   });
