@@ -63,6 +63,7 @@ function createWindow() {
     dialog.showMessageBox(null, options, (response) => {
       if (response == 1) {
         console.log('install accepted');
+        app.removeAllListeners('window-all-closed');
         autoUpdater.quitAndInstall();
       }
     });
