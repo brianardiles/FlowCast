@@ -10,6 +10,8 @@ body {
     color: #FFFFFF;
     border: solid 1px #4A4A4A;
     overflow: hidden;
+    user-select: none;
+    cursor: default;
 }
 
 .cont {
